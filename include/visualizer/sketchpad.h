@@ -5,10 +5,9 @@
 #define FINAL_PROJECT_SONALIMERCHIA_INCLUDE_SKETCHPAD_H_
 
 namespace kaleidoscope {
-
+namespace visualizer {
 class Sketchpad {
  public:
-  void clear();
   void draw(const std::vector<stroke> &strokes);
   void draw(const stroke &stroke);
 
@@ -21,7 +20,7 @@ class Sketchpad {
   glm::vec2 center_;
   size_t num_sectors_;
 };
-
+}
 }
 
 #endif //FINAL_PROJECT_SONALIMERCHIA_INCLUDE_SKETCHPAD_H_

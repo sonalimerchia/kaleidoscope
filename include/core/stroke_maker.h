@@ -10,8 +10,9 @@ namespace kaleidoscope {
 class StrokeMaker {
  public:
   const stroke GetStroke() const;
-  void AddPoint(const glm::ivec2 &point);
+  void AddPointToStroke(const glm::ivec2 &point);
   void StartNewStroke(const glm::ivec2 &point);
+  void clear();
 
   void SetBrushSize(size_t new_size);
   void SetColor(const ci::Color &color);
@@ -24,6 +25,8 @@ class StrokeMaker {
   ci::Color color_;
   size_t brush_size_;
   size_t num_sectors_;
+
+  void AddPoint(const glm::ivec2 &point);
 };
 
 }

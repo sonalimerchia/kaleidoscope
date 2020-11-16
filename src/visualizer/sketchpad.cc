@@ -6,12 +6,10 @@
 #define PI 3.141592653589793238462643383279502884197169399375105820974944592307f
 
 namespace kaleidoscope {
-
-void Sketchpad::clear() {
-  ci::gl::clear(background_);
-}
+namespace visualizer {
 
 void Sketchpad::draw(const std::vector<stroke> &strokes) {
+  ci::gl::clear("white");
   for (const stroke &stroke : strokes) {
     draw(stroke);
   }
@@ -20,14 +18,9 @@ void Sketchpad::draw(const std::vector<stroke> &strokes) {
 void Sketchpad::draw(const stroke &stroke) {
   ci::gl::color(stroke.color);
   for (const glm::vec2 &point : stroke.points) {
-    float theta = point.y;
-    for (size_t sector = 1; sector < num_sectors_; sector++) {
-      glm::vec2(center_.x + point.x * cos(theta),
-                center_.y + point.x * sin(theta));
-      ci::gl::drawSolidCircle(point,
-                              (float) stroke.brush_size);
-      theta += 2*PI/num_sectors_;
-    }
+    float x = center_.x - point.x * cos(point.y);
+    float y = center_.y + point.x * sin(point.y);
+    ci::gl::drawSolidCircle(glm::vec2(x, y), (float) stroke.brush_size);
   }
 }
 
@@ -42,5 +35,5 @@ void Sketchpad::SetCenter(const glm::vec2 &center) {
 void Sketchpad::SetNumSectors(size_t num_sectors) {
   num_sectors_ = num_sectors;
 }
-
+}
 }

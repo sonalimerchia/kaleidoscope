@@ -1,4 +1,6 @@
 #include <core/stroke_maker.h>
+#include <algorithm>
+
 #define PI 3.141592653589793238462643383279502884197169399375105820974944592307f
 
 namespace kaleidoscope {
@@ -30,6 +32,7 @@ void StrokeMaker::AddPoint(const glm::ivec2 &point) {
 
 void StrokeMaker::StartNewStroke(const glm::ivec2 &point) {
   points_.clear();
+  AddPointToStroke(point);
 }
 
 void StrokeMaker::SetBrushSize(size_t new_size) {
@@ -46,6 +49,18 @@ void StrokeMaker::SetNumSectors(size_t new_num_sectors) {
 
 void StrokeMaker::SetCenter(const glm::vec2 &center) {
   center_ = center;
+}
+
+void StrokeMaker::AddPointToStroke(const glm::ivec2 &point) {
+  AddPoint(point);
+  const glm::vec2 &polar_point = points_.back();
+  for (size_t sector = 1; sector <= num_sectors_; sector++) {
+    points_.push_back(glm::vec2(polar_point.x, polar_point.y + 2*sector*PI/num_sectors_));
+  }
+}
+
+void StrokeMaker::clear() {
+  points_.clear();
 }
 
 }

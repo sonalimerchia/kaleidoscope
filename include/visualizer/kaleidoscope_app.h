@@ -13,7 +13,10 @@
 
 namespace kaleidoscope {
 
+namespace visualizer {
+
 class KaleidoscopeApp : public ci::app::App {
+
  public:
   void setup() override;
   void draw() override;
@@ -27,6 +30,8 @@ class KaleidoscopeApp : public ci::app::App {
   StrokeMaker maker_;
   bool needs_refresh_;
 };
+
+}
 
 }
 

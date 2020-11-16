@@ -2,6 +2,8 @@
 
 namespace kaleidoscope {
 
+namespace visualizer {
+
 void KaleidoscopeApp::mouseUp(ci::app::MouseEvent event) {
   strokes_.push_back(maker_.GetStroke());
   maker_.StartNewStroke(event.getPos());
@@ -9,7 +11,7 @@ void KaleidoscopeApp::mouseUp(ci::app::MouseEvent event) {
 }
 
 void KaleidoscopeApp::mouseDrag(ci::app::MouseEvent event) {
-  maker_.AddPoint(event.getPos());
+  maker_.AddPointToStroke(event.getPos());
 }
 
 void KaleidoscopeApp::mouseDown(ci::app::MouseEvent event) {
@@ -17,8 +19,7 @@ void KaleidoscopeApp::mouseDown(ci::app::MouseEvent event) {
 }
 
 void KaleidoscopeApp::draw() {
-  if(needs_refresh_) {
-    pad_.clear();
+  if (needs_refresh_) {
     pad_.draw(strokes_);
     needs_refresh_ = false;
   }
@@ -38,6 +39,8 @@ void KaleidoscopeApp::setup() {
   maker_.SetCenter(glm::vec2(500, 375));
 
   needs_refresh_ = true;
+}
+
 }
 
 }

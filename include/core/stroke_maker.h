@@ -21,12 +21,12 @@ class StrokeMaker {
 
  private:
   glm::vec2 center_;
-  std::vector<glm::vec2> points_;
+  std::vector<std::vector<glm::vec2>> points_by_sector_;
   ci::Color color_;
   size_t brush_size_;
   size_t num_sectors_;
 
-  void AddPoint(const glm::ivec2 &point);
+  glm::vec2 CartesianToPolar(const glm::ivec2 &point);
 };
 
 }

@@ -10,7 +10,7 @@ namespace kaleidoscope {
 struct stroke {
   ci::Color color;
   size_t brush_size;
-  std::vector<glm::vec2> points;
+  std::vector<std::vector<glm::vec2>> points_by_sector;
 };
 
 }

@@ -17,10 +17,14 @@ void Sketchpad::draw(const std::vector<stroke> &strokes) {
 
 void Sketchpad::draw(const stroke &stroke) {
   ci::gl::color(stroke.color);
-  for (const glm::vec2 &point : stroke.points) {
-    float x = center_.x - point.x * cos(point.y);
-    float y = center_.y + point.x * sin(point.y);
-    ci::gl::drawSolidCircle(glm::vec2(x, y), (float) stroke.brush_size);
+  ci::gl::lineWidth((float)stroke.brush_size);
+
+  for (const std::vector<glm::vec2> &sector : stroke.points_by_sector) {
+    ci::gl::begin(GL_LINE_STRIP);
+    for (const glm::vec2 &point : sector) {
+      ci::gl::vertex(point);
+    }
+    ci::gl::end();
   }
 }
 

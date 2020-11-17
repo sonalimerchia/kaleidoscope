@@ -9,17 +9,21 @@ namespace kaleidoscope {
 namespace visualizer {
 
 void Sketchpad::draw(const std::vector<stroke> &strokes) {
-  ci::gl::clear("white");
+  // Clear and draw all the strokes
+  ci::gl::clear(background_);
   for (const stroke &stroke : strokes) {
     draw(stroke);
   }
 }
 
 void Sketchpad::draw(const stroke &stroke) {
+  // Set the gl settings to the stroke's settings
   ci::gl::color(stroke.color);
   ci::gl::lineWidth((float)stroke.brush_size);
 
+  // Draw all the sectors
   for (const std::vector<glm::vec2> &sector : stroke.points_by_sector) {
+    // Draw lines between the two points to fix lagging issue
     ci::gl::begin(GL_LINE_STRIP);
     for (const glm::vec2 &point : sector) {
       ci::gl::vertex(point);
@@ -32,12 +36,5 @@ void Sketchpad::SetBackground(const ci::Color &color) {
   background_ = color;
 }
 
-void Sketchpad::SetCenter(const glm::vec2 &center) {
-  center_ = center;
-}
-
-void Sketchpad::SetNumSectors(size_t num_sectors) {
-  num_sectors_ = num_sectors;
-}
 }
 }

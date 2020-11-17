@@ -5,12 +5,8 @@
 
 namespace kaleidoscope {
 
-const stroke StrokeMaker::GetStroke() const {
-  stroke new_stroke;
-  new_stroke.brush_size = brush_size_;
-  new_stroke.color = color_;
-  new_stroke.points_by_sector = points_by_sector_;
-  return new_stroke;
+const stroke& StrokeMaker::GetStroke() const {
+  return current_stroke_;
 }
 
 glm::vec2 StrokeMaker::CartesianToPolar(const glm::ivec2 &point) {
@@ -22,7 +18,7 @@ glm::vec2 StrokeMaker::CartesianToPolar(const glm::ivec2 &point) {
   theta *= (realigned_point.y > 0 ? -1 : 1);
 
   // Realign so connecting works well
-  float sector_angle = 2*PI/num_sectors_;
+  float sector_angle = 2 * PI / num_sectors_;
   theta = sector_angle - theta;
 
   return glm::vec2((float)r, (float)theta);
@@ -34,11 +30,11 @@ void StrokeMaker::StartNewStroke(const glm::ivec2 &point) {
 }
 
 void StrokeMaker::SetBrushSize(size_t new_size) {
-  brush_size_ = new_size;
+  current_stroke_.brush_size = new_size;
 }
 
 void StrokeMaker::SetColor(const cinder::Color &color) {
-  color_ = color;
+  current_stroke_.color = color;
 }
 
 void StrokeMaker::SetNumSectors(size_t new_num_sectors) {
@@ -52,15 +48,17 @@ void StrokeMaker::SetCenter(const glm::vec2 &center) {
 
 void StrokeMaker::AddPointToStroke(const glm::ivec2 &point) {
   const glm::vec2 &polar_point = CartesianToPolar(point);
+
+  // make one point in each sector
   for (size_t sector = 0; sector < num_sectors_; sector++) {
-    glm::vec2 polar(polar_point.x, polar_point.y + 2*sector*PI/num_sectors_);
+    glm::vec2 polar(polar_point.x, polar_point.y - 2*sector*PI/num_sectors_);
     glm::vec2 cartesian(polar.x*cos(polar.y), polar.x*sin(polar.y));
-    points_by_sector_.at(sector).push_back(center_ - cartesian);
+    current_stroke_.points_by_sector.at(sector).push_back(center_ + cartesian);
   }
 }
 
 void StrokeMaker::clear() {
-  points_by_sector_ = std::vector<std::vector<glm::vec2>>(num_sectors_);
+  current_stroke_.points_by_sector = std::vector<std::vector<glm::vec2>>(num_sectors_);
 }
 
 }

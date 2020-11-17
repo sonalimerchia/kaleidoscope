@@ -13,6 +13,6 @@ struct stroke {
   std::vector<std::vector<glm::vec2>> points_by_sector;
 };
 
-}
+} // namespace kaleidoscope
 
 #endif //IDEAL_GAS_INCLUDE_CORE_STROKE_H_

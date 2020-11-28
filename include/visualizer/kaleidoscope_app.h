@@ -7,9 +7,10 @@
 #include "sketchpad.h"
 #include "core/stroke.h"
 #include "core/stroke_maker.h"
+#include "core/button.h"
 
-#ifndef FINAL_PROJECT_SONALIMERCHIA_INCLUDE_KALEIDOSCOPE_H_
-#define FINAL_PROJECT_SONALIMERCHIA_INCLUDE_KALEIDOSCOPE_H_
+#ifndef KALEIDOSCOPE_INCLUDE_KALEIDOSCOPE_APP_H_
+#define KALEIDOSCOPE_INCLUDE_KALEIDOSCOPE_APP_H_
 
 namespace kaleidoscope {
 
@@ -56,12 +57,15 @@ class KaleidoscopeApp : public ci::app::App {
  private:
   Sketchpad pad_;
   std::vector<stroke> strokes_;
+  std::vector<Button> buttons_;
   StrokeMaker maker_;
   bool needs_refresh_;
+
+  void ButtonPressed(size_t button_index);
 };
 
 } // namespace visualizer
 
 } // namespace kaleidoscope
 
-#endif //FINAL_PROJECT_SONALIMERCHIA_INCLUDE_KALEIDOSCOPE_H_
+#endif //KALEIDOSCOPE_INCLUDE_KALEIDOSCOPE_APP_H_

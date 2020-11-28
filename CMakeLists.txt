@@ -46,7 +46,8 @@ if(NOT catch2_POPULATED)
             include/visualizer/kaleidoscope_app.h
             include/visualizer/sketchpad.h
             include/core/stroke_maker.h
-            )
+            include/core/button.h
+            include/core/slider.h)
     target_include_directories(catch2 INTERFACE ${catch2_SOURCE_DIR}/single_include)
 
 endif()
@@ -57,7 +58,9 @@ get_filename_component(APP_PATH "${CMAKE_CURRENT_SOURCE_DIR}/" ABSOLUTE)
 include("${CINDER_PATH}/proj/cmake/modules/cinderMakeApp.cmake")
 
 list(APPEND CORE_SOURCE_FILES
-        src/core/stroke_maker.cc)
+        src/core/stroke_maker.cc
+        src/core/button.cc
+        src/core/slider.cc)
 
 list(APPEND SOURCE_FILES
         ${CORE_SOURCE_FILES}

@@ -1,9 +1,11 @@
 #include <core/stroke_maker.h>
 #include <algorithm>
 
-#define PI 3.141592653589793238462643383279502884197169399375105820974944592307f
-
 namespace kaleidoscope {
+
+StrokeMaker::StrokeMaker() {
+  current_stroke_.type = StrokeType::Draw;
+}
 
 const stroke& StrokeMaker::GetStroke() const {
   return current_stroke_;
@@ -59,6 +61,10 @@ void StrokeMaker::AddPointToStroke(const glm::ivec2 &point) {
 
 void StrokeMaker::clear() {
   current_stroke_.points_by_sector = std::vector<std::vector<glm::vec2>>(num_sectors_);
+}
+
+void StrokeMaker::ChangeMode() {
+  current_stroke_.type = current_stroke_.type == StrokeType::Draw ? StrokeType::Erase : StrokeType::Draw;
 }
 
 }

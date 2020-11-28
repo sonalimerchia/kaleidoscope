@@ -32,5 +32,6 @@ allowing some lines to be translucent so multiple layers are visible.
 Week | Tasks
 ------------ | -------------
 1 | Setup and Kaleidoscope Drawing Feature
-2 | Saving and Sector Recalibrating Features
-3 | Undo, Color Changing/Customization, and Saving Features
+2 | Saving and Sector Recalibrating Features & Set up an editor bar
+3 | Undo, Color Changing/Customization, eraser, and Saving Features
+

@@ -2,13 +2,17 @@
 
 #include "stroke.h"
 
-#ifndef IDEAL_GAS_INCLUDE_CORE_STROKE_MAKER_H_
-#define IDEAL_GAS_INCLUDE_CORE_STROKE_MAKER_H_
+//TODO:: Find pi in math.h
+
+#ifndef KALEIDOSCOPE_INCLUDE_CORE_STROKE_MAKER_H_
+#define KALEIDOSCOPE_INCLUDE_CORE_STROKE_MAKER_H_
 
 namespace kaleidoscope {
 
 class StrokeMaker {
  public:
+  StrokeMaker();
+
   /**
    * @return the current stroke being created
    */
@@ -56,6 +60,8 @@ class StrokeMaker {
    */
   void SetCenter(const glm::vec2 &center);
 
+  void ChangeMode();
+
  private:
   glm::vec2 center_;
   size_t num_sectors_;
@@ -73,4 +79,4 @@ class StrokeMaker {
 
 } // namespace kaleidoscope
 
-#endif //IDEAL_GAS_INCLUDE_CORE_STROKE_MAKER_H_
+#endif //KALEIDOSCOPE_INCLUDE_CORE_STROKE_MAKER_H_

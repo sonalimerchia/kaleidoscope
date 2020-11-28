@@ -1,8 +1,8 @@
 #include "core/stroke.h"
 #include <glm/glm.hpp>
 
-#ifndef FINAL_PROJECT_SONALIMERCHIA_INCLUDE_SKETCHPAD_H_
-#define FINAL_PROJECT_SONALIMERCHIA_INCLUDE_SKETCHPAD_H_
+#ifndef KALEIDOSCOPE_INCLUDE_SKETCHPAD_H_
+#define KALEIDOSCOPE_INCLUDE_SKETCHPAD_H_
 
 namespace kaleidoscope {
 
@@ -14,6 +14,7 @@ class Sketchpad {
    * Clear the current sketchpad and draw all the strokes passed in
    * @param strokes the strokes to be drawn
    */
+   //TODO:: Add clear to function name
   void draw(const std::vector<stroke> &strokes);
 
   /**
@@ -36,4 +37,4 @@ class Sketchpad {
 
 } // namespace kaleidoscope
 
-#endif //FINAL_PROJECT_SONALIMERCHIA_INCLUDE_SKETCHPAD_H_
+#endif //KALEIDOSCOPE_INCLUDE_SKETCHPAD_H_

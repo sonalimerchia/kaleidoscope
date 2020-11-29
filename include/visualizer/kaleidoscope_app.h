@@ -7,7 +7,8 @@
 #include "sketchpad.h"
 #include "core/stroke.h"
 #include "core/stroke_maker.h"
-#include "core/button.h"
+#include "toolbar.h"
+#include "core/command_type.h"
 
 #ifndef KALEIDOSCOPE_INCLUDE_KALEIDOSCOPE_APP_H_
 #define KALEIDOSCOPE_INCLUDE_KALEIDOSCOPE_APP_H_
@@ -19,6 +20,9 @@ namespace visualizer {
 class KaleidoscopeApp : public ci::app::App {
 
  public:
+  static size_t kWindowHeight;
+  static size_t kWindowWidth;
+
   /**
    * Sets up the field variables of the app
    */
@@ -56,12 +60,10 @@ class KaleidoscopeApp : public ci::app::App {
 
  private:
   Sketchpad pad_;
-  std::vector<stroke> strokes_;
-  std::vector<Button> buttons_;
-  StrokeMaker maker_;
+  Toolbar tools_;
   bool needs_refresh_;
 
-  void ButtonPressed(size_t button_index);
+  void ManageCommand(const CommandType &command);
 };
 
 } // namespace visualizer

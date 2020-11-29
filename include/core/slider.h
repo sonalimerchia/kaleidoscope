@@ -8,14 +8,19 @@
 
 namespace kaleidoscope {
 
-class Slider : public Button {
+class Slider {
  public:
   Slider(const glm::vec2 &location, const glm::vec2 &dimensions, const std::string &title);
 
-  bool WasPressed(const glm::ivec2 &mouse_loc) const override;
-  void Draw() const override;
+  bool WasEdited(const glm::ivec2 &mouse_loc) const;
+  void Draw() const;
+  float GetDegree();
+  void Slide(const glm::ivec2 &mouse_loc);
 
  private:
+  const glm::vec2 position_;
+  const glm::vec2 dimensions_;
+  std::string message_;
   float degree_;
 };
 

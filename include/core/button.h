@@ -10,13 +10,13 @@ class Button {
  public:
   Button(const glm::vec2 &position, const glm::vec2 &dimensions, const std::string &message);
 
-  virtual bool WasPressed(const glm::ivec2 &mouse_location) const;
+  bool WasPressed(const glm::ivec2 &mouse_location) const;
   void SetMessage(const std::string &new_message);
 
-  virtual void Draw() const;
+  void Draw() const;
   const std::string& GetMessage() const;
 
- protected:
+ private:
   const glm::vec2 position_;
   const glm::vec2 dimensions_;
   std::string message_;

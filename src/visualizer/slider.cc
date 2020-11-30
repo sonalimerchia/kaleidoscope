@@ -17,8 +17,8 @@ Slider::Slider(const vec2 &position, const vec2 &dimensions, const string &title
 }
 
 bool Slider::WasEdited(const ivec2 &mouse_loc) const {
-  return position_.x + dimensions_.x/2 - kSliderTabHeight <= mouse_loc.x &&
-      mouse_loc.x <= position_.x + dimensions_.x/2 + kSliderTabHeight &&
+  return position_.x + dimensions_.x/2 - kSliderTabHeight*2 <= mouse_loc.x &&
+      mouse_loc.x <= position_.x + dimensions_.x/2 + kSliderTabHeight*2 &&
       position_.y + kSliderTabHeight + kFontSize <= mouse_loc.y &&
       mouse_loc.y <= position_.y + dimensions_.y;
 }
@@ -36,10 +36,10 @@ void Slider::Draw() const {
                    position_ + vec2(dimensions_.x/2, dimensions_.y));
 
   // Draw tab of slider
-  vec2 box_loc(dimensions_.x/2 - kSliderTabHeight,
-               dimensions_.y - (degree_ * bar_length) - kSliderTabHeight/2);
+  vec2 box_loc(dimensions_.x/2 - kSliderTabHeight*2,
+               dimensions_.y - (degree_ * bar_length) - kSliderTabHeight);
   box_loc += position_;
-  ci::gl::drawSolidRect(ci::Rectf(box_loc, box_loc + vec2(2*kSliderTabHeight, kSliderTabHeight)));
+  ci::gl::drawSolidRect(ci::Rectf(box_loc, box_loc + vec2(4*kSliderTabHeight, 2*kSliderTabHeight)));
 }
 
 float Slider::GetDegree() {

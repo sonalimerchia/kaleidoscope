@@ -48,8 +48,7 @@ if(NOT catch2_POPULATED)
             include/visualizer/toolbar.h
             include/visualizer/button.h
             include/visualizer/slider.h
-            include/core/stroke_maker.h
-            include/core/constants.h)
+            include/core/stroke_maker.h)
     target_include_directories(catch2 INTERFACE ${catch2_SOURCE_DIR}/single_include)
 endif()
 
@@ -70,7 +69,10 @@ list(APPEND SOURCE_FILES
         src/visualizer/slider.cc)
 
 list(APPEND TEST_FILES
-        test/sample_test.cc)
+        test/button_test.cc
+        test/slider_test.cc
+        test/stroke_maker_test.cc
+        test/toolbar_test.cc)
 
 ci_make_app(
         APP_NAME        kaleidoscope.cc

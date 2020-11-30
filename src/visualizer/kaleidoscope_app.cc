@@ -75,6 +75,8 @@ void KaleidoscopeApp::keyDown(KeyEvent event) {
 }
 
 void KaleidoscopeApp::ManageCommand(const CommandType &command) {
+  needs_refresh_ = true;
+
   switch(command) {
     // Change mode of drawing from eraser to drawing or vice versa
     case CommandType::DrawMode:

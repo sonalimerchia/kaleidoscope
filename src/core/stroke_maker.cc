@@ -14,6 +14,10 @@ using std::pair;
 
 StrokeMaker::StrokeMaker() {
   current_stroke_.type = StrokeType::Draw;
+  current_stroke_.brush_size = kMinBrushSize;
+  current_stroke_.color = kDefaultDrawingColor;
+
+  num_sectors_ = kDefaultNumSectors;
 }
 
 const stroke& StrokeMaker::GetStroke() const {

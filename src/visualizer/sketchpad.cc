@@ -15,10 +15,6 @@ using std::vector;
 using ci::Color;
 
 Sketchpad::Sketchpad() {
-  // Set up maker
-  maker_.SetBrushSize(kMinBrushSize);
-  maker_.SetColor(kDefaultDrawingColor);
-  maker_.SetNumSectors(kDefaultNumSectors);
   maker_.SetCenter(vec2(kWindowHeight/2, kWindowHeight/2));
 }
 

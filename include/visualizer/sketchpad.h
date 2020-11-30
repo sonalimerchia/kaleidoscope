@@ -1,6 +1,5 @@
-#pragma once
-
 #include <glm/glm.hpp>
+#include <vector>
 
 #include "core/stroke.h"
 #include "core/stroke_maker.h"
@@ -11,6 +10,10 @@
 namespace kaleidoscope {
 
 namespace visualizer {
+
+using ci::Color;
+using glm::ivec2;
+using std::vector;
 
 class Sketchpad {
  public:
@@ -37,7 +40,7 @@ class Sketchpad {
    * Set the background of the sketchpad to the color passed in
    * @param color the new color of the sketchpad
    */
-  void SetBackground(const ci::Color &color);
+  void SetBackground(const Color &color);
 
   /**
    * React as if the mouse was lifted up
@@ -48,13 +51,13 @@ class Sketchpad {
    * React as if the mouse was dragged across the sketchpad
    * @param loc the location of the mouse as it is dragged
    */
-  void MouseDragged(const glm::ivec2 &loc);
+  void MouseDragged(const ivec2 &loc);
 
   /**
    * React as if the mouse just pressed down on the sketchpad
    * @param loc the location of the mouse as it is pressed down
    */
-  void MouseDown(const glm::ivec2 &loc);
+  void MouseDown(const ivec2 &loc);
 
   /**
    * Clear the sketchpad such that next time ClearAndDraw() is called, the current strokes
@@ -81,8 +84,8 @@ class Sketchpad {
   void ChangeNumSectors(int change);
 
  private:
-  ci::Color background_;
-  std::vector<stroke> strokes_;
+  Color background_;
+  vector<stroke> strokes_;
   StrokeMaker maker_;
 };
 

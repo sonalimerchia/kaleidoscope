@@ -1,5 +1,3 @@
-#pragma once
-
 #include <glm/glm.hpp>
 
 #include "core/stroke_maker.h"
@@ -15,9 +13,12 @@ namespace kaleidoscope {
 
 namespace visualizer {
 
-class Toolbar {
- public:
+using glm::vec2;
+using glm::ivec2;
 
+class Toolbar {
+
+ public:
   /**
    * Construct a toolbar
    */
@@ -28,7 +29,7 @@ class Toolbar {
    * @param loc the location being tested to see if it falls within the toolbar
    * @return true if the point is within the toolbar; false otherwise
    */
-  bool ContainsPoint(const glm::ivec2 &loc);
+  bool ContainsPoint(const ivec2 &loc);
 
   /**
    * Draws the toolbar
@@ -40,7 +41,7 @@ class Toolbar {
    * @param loc the location where the mouse was clicked
    * @return the type of command evoked by the mouse activity
    */
-  CommandType MouseClicked(const glm::ivec2 &loc);
+  CommandType MouseClicked(const ivec2 &loc);
 
 
   /**
@@ -48,7 +49,7 @@ class Toolbar {
    * @param loc the location where the mouse was dragged
    * @return the type of command evoked by the mouse activity
    */
-  CommandType MouseDragged(const glm::ivec2 &loc);
+  CommandType MouseDragged(const ivec2 &loc);
 
   /**
    * @return the brush size selected by slider activity within the toolbar
@@ -56,8 +57,8 @@ class Toolbar {
   size_t GetBrushSize();
 
  private:
-  glm::vec2 position_;
-  glm::vec2 dimensions_;
+  vec2 position_;
+  vec2 dimensions_;
 
   Button draw_mode_;
   Button save_;

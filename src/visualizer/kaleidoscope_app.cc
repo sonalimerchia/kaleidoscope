@@ -5,8 +5,10 @@ namespace kaleidoscope {
 
 namespace visualizer {
 
+using glm::ivec2;
 using ci::app::MouseEvent;
 using ci::app::KeyEvent;
+using std::experimental::filesystem::path;
 
 void KaleidoscopeApp::mouseUp(MouseEvent event) {
   // React to mouse up, refresh the pad
@@ -55,7 +57,7 @@ void KaleidoscopeApp::setup() {
   setWindowSize(kWindowWidth, kWindowHeight);
 
   // Set Up Pad
-  pad_.SetBackground(ci::Color("white"));
+  pad_.SetBackground(kDefaultBackgroundColor);
   needs_refresh_ = true;
 }
 
@@ -86,12 +88,12 @@ void KaleidoscopeApp::ManageCommand(const CommandType &command) {
 
     // Save and quit
     case CommandType::Save:
-      std::experimental::filesystem::path path = getSaveFilePath(kImagesFolderPath);
+      path path = getSaveFilePath(kImagesFolderPath);
       if (!path.has_extension()) {
-        path.replace_extension("png");
+        path.replace_extension(kDefaultImageExtension);
       }
-      ci::writeImage(path, copyWindowSurface(ci::Area(glm::ivec2(0, 0),
-                                                      glm::ivec2(kWindowHeight, kWindowHeight))));
+      ci::writeImage(path, copyWindowSurface(ci::Area(ivec2(0, 0),
+                                                      ivec2(kWindowHeight, kWindowHeight))));
       quit();
   }
 }

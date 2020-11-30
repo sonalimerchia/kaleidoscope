@@ -1,35 +1,45 @@
+#include <cinder/gl/gl.h>
+
 #include <visualizer/slider.h>
-#include "cinder/gl/gl.h"
+#include <core/constants.h>
 
 namespace kaleidoscope {
 
 namespace visualizer {
 
-Slider::Slider(const glm::vec2 &position,
-               const glm::vec2 &dimensions,
-               const std::string &title) :
+using glm::vec2;
+using glm::ivec2;
+using std::string;
+
+Slider::Slider(const vec2 &position, const vec2 &dimensions, const string &title) :
     position_(position), dimensions_(dimensions), message_(title) {
   degree_ = 0;
 }
 
-bool Slider::WasEdited(const glm::ivec2 &mouse_loc) const {
-  return position_.x + dimensions_.x / 2 - 5 <= mouse_loc.x &&
-      mouse_loc.x <= position_.x + dimensions_.x / 2 + 5 &&
-      position_.y + 25 <= mouse_loc.y &&
+bool Slider::WasEdited(const ivec2 &mouse_loc) const {
+  return position_.x + dimensions_.x/2 - kSliderTabHeight <= mouse_loc.x &&
+      mouse_loc.x <= position_.x + dimensions_.x/2 + kSliderTabHeight &&
+      position_.y + kSliderTabHeight + kFontSize <= mouse_loc.y &&
       mouse_loc.y <= position_.y + dimensions_.y;
 }
 
 void Slider::Draw() const {
-  ci::gl::drawString(message_, position_,
-                     ci::Color("white"), ci::Font("arial", 20));
-  float bar_length = dimensions_.y - 25;
-  ci::gl::color(ci::Color("black"));
-  ci::gl::drawLine(position_ + glm::vec2(dimensions_.x / 2, 25),
-                   position_ + glm::vec2(dimensions_.x / 2, dimensions_.y));
-  glm::vec2 box_loc = position_ + glm::vec2(dimensions_.x / 2 - 5,
-                                            dimensions_.y
-                                                - (degree_ * bar_length) - 2);
-  ci::gl::drawSolidRect(ci::Rectf(box_loc, box_loc + glm::vec2(10, 4)));
+  // Draw title/background of slider
+  ci::gl::color(kButtonTextColor);
+  ci::gl::drawSolidRect(ci::Rectf(position_, position_ + dimensions_));
+  ci::gl::drawString(message_, position_, kButtonColor, ci::Font(kFontStyle, kFontSize));
+
+  // Draw line of slider
+  float bar_length = dimensions_.y - kFontSize;
+  ci::gl::color(kButtonColor);
+  ci::gl::drawLine(position_ + vec2(dimensions_.x/2, kFontSize + kSliderTabHeight),
+                   position_ + vec2(dimensions_.x/2, dimensions_.y));
+
+  // Draw tab of slider
+  vec2 box_loc(dimensions_.x/2 - kSliderTabHeight,
+               dimensions_.y - (degree_ * bar_length) - kSliderTabHeight/2);
+  box_loc += position_;
+  ci::gl::drawSolidRect(ci::Rectf(box_loc, box_loc + vec2(2*kSliderTabHeight, kSliderTabHeight)));
 }
 
 float Slider::GetDegree() {
@@ -37,9 +47,9 @@ float Slider::GetDegree() {
 }
 
 void Slider::Slide(const glm::ivec2 &mouse_loc) {
-  float total = dimensions_.y - 25;
-  float current_loc = mouse_loc.y - position_.y - 25;
-  degree_ = 1 - current_loc / total;
+  float total_height_of_slider = dimensions_.y - kFontSize - kSliderTabHeight;
+  float current_loc_on_slider = mouse_loc.y - position_.y - kFontSize - kSliderTabHeight;
+  degree_ = 1 - current_loc_on_slider / total_height_of_slider;
 }
 
 } // namespace visualizer

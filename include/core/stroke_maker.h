@@ -7,6 +7,11 @@
 
 namespace kaleidoscope {
 
+using glm::ivec2;
+using glm::vec2;
+using ci::Color;
+using std::pair;
+
 class StrokeMaker {
  public:
   StrokeMaker();
@@ -21,13 +26,13 @@ class StrokeMaker {
    * each of the sectors
    * @param point the original point
    */
-  void AddPointToStroke(const glm::ivec2 &point);
+  void AddPointToStroke(const ivec2 &point);
 
   /**
    * Reset the stroke maker to clear current stroke and add the first point
    * @param point the first point where the stroke begins
    */
-  void StartNewStroke(const glm::ivec2 &point);
+  void StartNewStroke(const ivec2 &point);
 
   /**
    * Reset the stroke maker to clear current stroke
@@ -44,7 +49,7 @@ class StrokeMaker {
    * Change the color of the current stroke
    * @param color the new color of the current stroke
    */
-  void SetColor(const ci::Color &color);
+  void SetColor(const Color &color);
 
   /**
    * Change the number of sectors the maker generates strokes for
@@ -61,10 +66,10 @@ class StrokeMaker {
 
   /*  Getter and Setter methods */
   size_t GetNumSectors();
-  void SetCenter(const glm::vec2 &center);
+  void SetCenter(const vec2 &center);
 
  private:
-  glm::vec2 center_;
+  vec2 center_;
   size_t num_sectors_;
   stroke current_stroke_;
 
@@ -73,9 +78,10 @@ class StrokeMaker {
    * a point based in polar coordinates
    * @param point the original point based in the cartesian coordinate system
    *        (same orientation as cinder's coordinate system where top left is 0,0)
-   * @return the point based in the polar coordinate system (centered at origin)
+   * @return the theta and radius coordinates of the point based in the polar
+   *            coordinate system (centered at origin)
    */
-  glm::vec2 CartesianToPolar(const glm::ivec2 &point);
+  pair<float, float> CartesianToPolar(const ivec2 &point);
 };
 
 } // namespace kaleidoscope

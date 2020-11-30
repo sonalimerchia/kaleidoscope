@@ -1,22 +1,25 @@
-#include "cinder/gl/gl.h"
 #include <visualizer/toolbar.h>
 #include <core/constants.h>
+
+#include "cinder/gl/gl.h"
 
 namespace kaleidoscope {
 
 namespace visualizer {
 
-Toolbar::Toolbar() : position_(750, 0),
-                     dimensions_(250, 750),
-                     draw_mode_(position_, glm::vec2(dimensions_.x, 50),
-                                    "Erase"),
-                     brush_size_(glm::vec2(position_.x, 50),
-                                 glm::vec2(dimensions_.x, 300), "Brush Size"),
-                     save_(glm::vec2(position_.x, 700), glm::vec2(dimensions_.x, 50), "Save"){}
+using glm::vec2;
+using glm::ivec2;
+using std::string;
 
-CommandType Toolbar::MouseClicked(const glm::ivec2 &loc) {
+Toolbar::Toolbar() : position_(kWindowHeight, 0),
+                     dimensions_(kWindowWidth - kWindowHeight, kWindowHeight),
+                     draw_mode_(position_, vec2(dimensions_.x, kButtonHeight),"Erase"),
+                     brush_size_(vec2(position_.x, kButtonHeight),vec2(dimensions_.x, kSliderHeight), "Brush Size"),
+                     save_(vec2(position_.x, kWindowHeight - kButtonHeight),vec2(dimensions_.x, kButtonHeight), "Save"){}
+
+CommandType Toolbar::MouseClicked(const ivec2 &loc) {
   if (draw_mode_.WasPressed(loc)) {
-    std::string title = draw_mode_.GetMessage() == "Erase" ? "Draw" : "Erase";
+    string title = draw_mode_.GetMessage() == "Erase" ? "Draw" : "Erase";
     draw_mode_.SetMessage(title);
     return CommandType::DrawMode;
 
@@ -31,7 +34,7 @@ CommandType Toolbar::MouseClicked(const glm::ivec2 &loc) {
   return CommandType::None;
 }
 
-CommandType Toolbar::MouseDragged(const glm::ivec2 &loc) {
+CommandType Toolbar::MouseDragged(const ivec2 &loc) {
   if (brush_size_.WasEdited(loc)) {
     brush_size_.Slide(loc);
     return CommandType::BrushSize;
@@ -47,8 +50,14 @@ size_t Toolbar::GetBrushSize() {
 
 void Toolbar::Draw() {
   ci::gl::lineWidth(1);
-  ci::gl::color(ci::Color("black"));
+
+  // Draw toolbar background
+  ci::gl::color(kButtonTextColor);
+  ci::gl::drawSolidRect(ci::Rectf(position_, position_ + dimensions_));
+  ci::gl::color(kButtonColor);
   ci::gl::drawStrokedRect(ci::Rectf(position_, position_+dimensions_));
+
+  // Draw components on toolbar
   draw_mode_.Draw();
   brush_size_.Draw();
   save_.Draw();

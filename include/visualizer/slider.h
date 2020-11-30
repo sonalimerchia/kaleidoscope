@@ -8,6 +8,10 @@ namespace kaleidoscope {
 
 namespace visualizer {
 
+using glm::vec2;
+using glm::ivec2;
+using std::string;
+
 class Slider {
  public:
   /**
@@ -16,22 +20,20 @@ class Slider {
    * @param dimensions the dimensions of the slider
    * @param title the title of the slider
    */
-  Slider(const glm::vec2 &position,
-         const glm::vec2 &dimensions,
-         const std::string &title);
+  Slider(const vec2 &position, const vec2 &dimensions, const string &title);
 
   /**
    * Determines whether mouse activity in that location would change the slider
    * @param mouse_loc the location on the slider where the mouse clicked/was dragged
    * @return true if the slider would have been edited; false otherwise
    */
-  bool WasEdited(const glm::ivec2 &mouse_loc) const;
+  bool WasEdited(const ivec2 &mouse_loc) const;
 
   /**
    * Edits the values of the slider in accordance with the mouse activity
    * @param mouse_loc the location on the slider where the mouse activity took place
    */
-  void Slide(const glm::ivec2 &mouse_loc);
+  void Slide(const ivec2 &mouse_loc);
 
   /**
    * Draws the slider
@@ -41,12 +43,12 @@ class Slider {
   float GetDegree();
 
  private:
-  const glm::vec2 position_;
-  const glm::vec2 dimensions_;
-  std::string message_;
+  const vec2 position_;
+  const vec2 dimensions_;
+  string message_;
   float degree_; // A number between 0 and 1 which describes the selected level
                  // of the slider where 0 represents being at the bottom of the slider
-                 // and 1 represents beting at the top
+                 // and 1 represents being at the top
 };
 
 } // namespace visualizer

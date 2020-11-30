@@ -2,8 +2,6 @@
 
 #include "stroke.h"
 
-//TODO:: Find pi in math.h
-
 #ifndef KALEIDOSCOPE_INCLUDE_CORE_STROKE_MAKER_H_
 #define KALEIDOSCOPE_INCLUDE_CORE_STROKE_MAKER_H_
 
@@ -55,12 +53,15 @@ class StrokeMaker {
   void SetNumSectors(size_t new_num_sectors);
 
   /**
-   * Change the center of the current stroke maker
-   * @param center the new center of the sketchpad
+   * Toggles the maker such that if it was erasing, it will now draw and if it was
+   * drawing, it will now erase
    */
-  void SetCenter(const glm::vec2 &center);
-
   void ChangeMode();
+
+
+  /*  Getter and Setter methods */
+  size_t GetNumSectors();
+  void SetCenter(const glm::vec2 &center);
 
  private:
   glm::vec2 center_;

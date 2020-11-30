@@ -10,6 +10,6 @@ enum CommandType {
   Save
 };
 
-}
+} // namespace kaleidoscope
 
 #endif //KALEIDOSCOPE_INCLUDE_CORE_COMMAND_TYPE_H_

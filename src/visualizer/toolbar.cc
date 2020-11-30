@@ -1,13 +1,10 @@
-#include <visualizer/toolbar.h>
 #include "cinder/gl/gl.h"
+#include <visualizer/toolbar.h>
+#include <core/constants.h>
 
 namespace kaleidoscope {
 
 namespace visualizer {
-
-size_t Toolbar::kMaxBrushSize = 10;
-size_t Toolbar::kMinBrushSize = 1;
-StrokeMaker Toolbar::kTemp = StrokeMaker();
 
 Toolbar::Toolbar() : position_(750, 0),
                      dimensions_(250, 750),
@@ -64,6 +61,6 @@ bool Toolbar::ContainsPoint(const glm::ivec2 &mouse_loc) {
          mouse_loc.y <= position_.y + dimensions_.y;
 }
 
-}
+} // namespace visualizer
 
-}
+} // namespace kaleidoscope

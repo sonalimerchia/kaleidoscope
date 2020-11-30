@@ -44,10 +44,6 @@ void StrokeMaker::SetNumSectors(size_t new_num_sectors) {
   clear();
 }
 
-void StrokeMaker::SetCenter(const glm::vec2 &center) {
-  center_ = center;
-}
-
 void StrokeMaker::AddPointToStroke(const glm::ivec2 &point) {
   const glm::vec2 &polar_point = CartesianToPolar(point);
 
@@ -67,4 +63,12 @@ void StrokeMaker::ChangeMode() {
   current_stroke_.type = current_stroke_.type == StrokeType::Draw ? StrokeType::Erase : StrokeType::Draw;
 }
 
+size_t StrokeMaker::GetNumSectors() {
+  return num_sectors_;
 }
+
+void StrokeMaker::SetCenter(const glm::vec2 &center) {
+  center_ = center;
+}
+
+} // namespace kaleidoscope

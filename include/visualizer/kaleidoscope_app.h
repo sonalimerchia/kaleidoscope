@@ -5,8 +5,6 @@
 #include "cinder/gl/gl.h"
 
 #include "sketchpad.h"
-#include "core/stroke.h"
-#include "core/stroke_maker.h"
 #include "toolbar.h"
 #include "core/command_type.h"
 
@@ -20,9 +18,6 @@ namespace visualizer {
 class KaleidoscopeApp : public ci::app::App {
 
  public:
-  static size_t kWindowHeight;
-  static size_t kWindowWidth;
-
   /**
    * Sets up the field variables of the app
    */
@@ -60,9 +55,14 @@ class KaleidoscopeApp : public ci::app::App {
 
  private:
   Sketchpad pad_;
-  Toolbar tools_;
+  Toolbar toolbar_;
   bool needs_refresh_;
 
+  /**
+   * Changes the sketchpad and settings as if a command of the given command type
+   * has just been given
+   * @param command the type of command given
+   */
   void ManageCommand(const CommandType &command);
 };
 

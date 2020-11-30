@@ -1,17 +1,18 @@
 #include "cinder/gl/gl.h"
-#include <visualizer/toolbar.h>
+
+#include <core/constants.h>
 #include <visualizer/sketchpad.h>
-#include <visualizer/kaleidoscope_app.h>
 
 namespace kaleidoscope {
+
 namespace visualizer {
 
 Sketchpad::Sketchpad() {
   // Set up maker
-  maker_.SetBrushSize(Toolbar::kMinBrushSize);
+  maker_.SetBrushSize(kMinBrushSize);
   maker_.SetColor(ci::Color("blue"));
   maker_.SetNumSectors(6);
-  maker_.SetCenter(glm::ivec2(375, 375));
+  maker_.SetCenter(glm::vec2(kWindowHeight/2, kWindowHeight/2));
 }
 
 void Sketchpad::ClearAndDraw() {
@@ -65,8 +66,9 @@ void Sketchpad::MouseDown(const glm::ivec2 &loc) {
 }
 
 void Sketchpad::Clear() {
-  maker_.clear();
   strokes_.clear();
+  maker_.clear();
+
 }
 
 void Sketchpad::SetBrushSize(size_t brush_size) {
@@ -77,5 +79,31 @@ void Sketchpad::ChangeDrawMode() {
   maker_.ChangeMode();
 }
 
+void Sketchpad::ChangeNumSectors(int change) {
+  if (change + maker_.GetNumSectors() <=1) {
+    return;
+  }
+
+  std::vector<stroke> old_strokes = strokes_;
+  Clear();
+  maker_.SetNumSectors(maker_.GetNumSectors() + change);
+
+  for (const stroke &old : old_strokes) {
+    if (old.points_by_sector.at(0).size() == 0) {
+      continue;
+    }
+
+    maker_.SetBrushSize(old.brush_size);
+    maker_.SetColor(old.color);
+    maker_.StartNewStroke(old.points_by_sector.at(0).at(0));
+    for (size_t index = 1; index < old.points_by_sector.at(0).size(); index++) {
+      maker_.AddPointToStroke(old.points_by_sector.at(0).at(index));
+    }
+    strokes_.push_back(maker_.GetStroke());
+    maker_.clear();
+  }
 }
-}
+
+} // namespace visualizer
+
+} // namespace kaleidoscope

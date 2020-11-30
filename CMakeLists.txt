@@ -45,52 +45,13 @@ if(NOT catch2_POPULATED)
     add_library(catch2 OBJECT ${catch2_SOURCE_DIR}/single_include
             include/visualizer/kaleidoscope_app.h
             include/visualizer/sketchpad.h
-            include/core/stroke_maker.h
-            include/core/button.h
-            include/core/slider.h
             include/visualizer/toolbar.h
-            include/core/command_type.h
-            include/core/saver.h)
+            include/visualizer/button.h
+            include/visualizer/slider.h
+            include/core/stroke_maker.h
+            include/core/constants.h)
     target_include_directories(catch2 INTERFACE ${catch2_SOURCE_DIR}/single_include)
 endif()
-
-# Add Native File Dialog Library
-find_library(Git REQUIRED)
-FetchContent_Declare(
-        nativefiledialog
-        GIT_REPOSITORY https://github.com/mlabbe/nativefiledialog.git
-)
-
-FetchContent_GetProperties(nativefiledialog)
-if(NOT nativefiledialog_POPULATED)
-    FetchContent_Populate(nativefiledialog)
-endif()
-
-set(NFD_SOURCES ${nativefiledialog_SOURCE_DIR}/src/nfd_common.c)
-list(APPEND NFD_SOURCES ${nativefiledialog_SOURCE_DIR}/src/include)
-
-if (WIN32)
-    list(APPEND NFD_SOURCES ${nativefiledialog_SOURCE_DIR}/src/nfd_win.cpp)
-elseif (APPLE)
-    list(APPEND NFD_SOURCES ${nativefiledialog_SOURCE_DIR}/src/nfd_cocoa.m)
-elseif (UNIX)
-    list(APPEND NFD_SOURCES ${nativefiledialog_SOURCE_DIR}/src/nfd_gtk.c)
-elseif (UNIX)
-    message(FATAL_ERROR "Cannot detect your system, please report to https://github.com/aarcangeli/nativefiledialog-cmake/issues")
-endif ()
-
-
-add_library(nativefiledialog OBJECT ${NFD_SOURCES}
-        include/core/saver.h)
-target_include_directories(nativefiledialog INTERFACE ${NFD_SOURCES})
-
-##FetchContent_GetProperties(nativefiledialog)
-##if(NOT nativefiledialog_POPULATED)
-##    FetchContent_Populate(nativefiledialog)
-##    add_library(nativefiledialog OBJECT ${nativefiledialog_SOURCE_DIR}/src/include
-##            include/core/saver.h)
-##    target_include_directories(nativefiledialog INTERFACE ${nativefiledialog_SOURCE_DIR}/src/include)
-##endif()
 
 get_filename_component(CINDER_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cinder/../../" ABSOLUTE)
 get_filename_component(APP_PATH "${CMAKE_CURRENT_SOURCE_DIR}/" ABSOLUTE)
@@ -98,16 +59,15 @@ get_filename_component(APP_PATH "${CMAKE_CURRENT_SOURCE_DIR}/" ABSOLUTE)
 include("${CINDER_PATH}/proj/cmake/modules/cinderMakeApp.cmake")
 
 list(APPEND CORE_SOURCE_FILES
-        src/core/stroke_maker.cc
-        src/core/button.cc
-        src/core/slider.cc
-        src/core/saver.cc)
+        src/core/stroke_maker.cc)
 
 list(APPEND SOURCE_FILES
         ${CORE_SOURCE_FILES}
         src/visualizer/kaleidoscope_app.cc
         src/visualizer/sketchpad.cc
-        src/visualizer/toolbar.cc)
+        src/visualizer/toolbar.cc
+        src/visualizer/button.cc
+        src/visualizer/slider.cc)
 
 list(APPEND TEST_FILES
         test/sample_test.cc)
@@ -117,7 +77,6 @@ ci_make_app(
         CINDER_PATH     ${CINDER_PATH}
         SOURCES         apps/cinder_app_main.cc ${SOURCE_FILES}
         INCLUDES        include
-        LIBRARIES       nativefiledialog
 )
 
 ci_make_app(

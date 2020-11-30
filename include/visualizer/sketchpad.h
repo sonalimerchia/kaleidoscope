@@ -85,6 +85,7 @@ class Sketchpad {
 
  private:
   Color background_;
+  vector<size_t> clear_indexes_;
   vector<stroke> strokes_;
   StrokeMaker maker_;
 };

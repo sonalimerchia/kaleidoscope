@@ -14,7 +14,7 @@ using std::string;
 Toolbar::Toolbar() : position_(kWindowHeight, 0),
                      dimensions_(kWindowWidth - kWindowHeight, kWindowHeight),
                      draw_mode_(position_, vec2(dimensions_.x, kButtonHeight),"Erase"),
-                     brush_size_(vec2(position_.x, kButtonHeight),vec2(dimensions_.x, kSliderHeight), "Brush Size"),
+                     brush_size_(vec2(position_.x, kButtonHeight),vec2(dimensions_.x/5.0f, kSliderHeight), "Brush Size"),
                      save_(vec2(position_.x, kWindowHeight - kButtonHeight),vec2(dimensions_.x, kButtonHeight), "Save"){}
 
 CommandType Toolbar::MouseClicked(const ivec2 &loc) {

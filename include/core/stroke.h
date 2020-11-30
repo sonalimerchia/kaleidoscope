@@ -13,7 +13,8 @@ using glm::vec2;
 
 enum StrokeType {
   Draw,
-  Erase
+  Erase,
+  Clear
 };
 
 struct stroke {

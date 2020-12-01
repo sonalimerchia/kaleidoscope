@@ -15,6 +15,7 @@ Toolbar::Toolbar() : position_(kWindowHeight, 0),
                      dimensions_(kWindowWidth - kWindowHeight, kWindowHeight),
                      draw_mode_(position_, vec2(dimensions_.x, kButtonHeight),"Erase"),
                      brush_size_(vec2(position_.x, kButtonHeight),vec2(dimensions_.x/5.0f, kSliderHeight), "Brush Size"),
+                     color_selector_(vec2(position_.x, kButtonHeight+kSliderHeight), vec2(dimensions_.x, 700 - kButtonHeight-kSliderHeight)),
                      save_(vec2(position_.x, kWindowHeight - kButtonHeight),vec2(dimensions_.x, kButtonHeight), "Save"){}
 
 CommandType Toolbar::MouseClicked(const ivec2 &loc) {
@@ -29,6 +30,9 @@ CommandType Toolbar::MouseClicked(const ivec2 &loc) {
 
   } else if (save_.WasPressed(loc)) {
     return CommandType::Save;
+
+  } else if (color_selector_.WasEdited(loc)) {
+    color_selector_.ChangeColor(loc);
   }
 
   return CommandType::None;
@@ -38,6 +42,9 @@ CommandType Toolbar::MouseDragged(const ivec2 &loc) {
   if (brush_size_.WasEdited(loc)) {
     brush_size_.Slide(loc);
     return CommandType::BrushSize;
+
+  } else if (color_selector_.WasEdited(loc)) {
+    color_selector_.ChangeColor(loc);
   }
 
   return CommandType::None;
@@ -61,6 +68,7 @@ void Toolbar::Draw() {
   draw_mode_.Draw();
   brush_size_.Draw();
   save_.Draw();
+  color_selector_.Draw();
 }
 
 bool Toolbar::ContainsPoint(const glm::ivec2 &mouse_loc) {

@@ -48,7 +48,8 @@ if(NOT catch2_POPULATED)
             include/visualizer/toolbar.h
             include/visualizer/button.h
             include/visualizer/slider.h
-            include/core/stroke_maker.h)
+            include/core/stroke_maker.h
+            include/visualizer/color_selector.h)
     target_include_directories(catch2 INTERFACE ${catch2_SOURCE_DIR}/single_include)
 endif()
 
@@ -66,7 +67,8 @@ list(APPEND SOURCE_FILES
         src/visualizer/sketchpad.cc
         src/visualizer/toolbar.cc
         src/visualizer/button.cc
-        src/visualizer/slider.cc)
+        src/visualizer/slider.cc
+        src/visualizer/color_selector.cc)
 
 list(APPEND TEST_FILES
         test/button_test.cc

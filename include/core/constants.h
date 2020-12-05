@@ -24,7 +24,7 @@ static const size_t kMaxBrushSize = 40;
 static const float PI = 3.141592653589793238462643383279502884197169399375105820974944592307f;
 
 // Component Visualization Constants
-static const size_t kFontSize = 20;
+static const size_t kFontSize = 30;
 static const string kFontStyle = "arial";
 
 static const size_t kButtonHeight = 50;
@@ -32,7 +32,7 @@ static const size_t kSliderHeight = 300;
 
 static const Color kButtonColor = Color("black");
 static const Color kButtonTextColor = Color("white");
-static const size_t kSliderTabHeight = 4;
+static const size_t kSliderTabHeight = 6;
 
 // Default drawing settings
 static const size_t kDefaultNumSectors = 6;

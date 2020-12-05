@@ -6,6 +6,7 @@
 #include "core/button.h"
 #include "core/slider.h"
 #include "core/color_selector.h"
+#include "core/constants.h"
 
 #ifndef KALEIDOSCOPE_INCLUDE_TOOLBAR_H_
 #define KALEIDOSCOPE_INCLUDE_TOOLBAR_H_
@@ -23,7 +24,7 @@ class Toolbar {
   /**
    * Construct a toolbar
    */
-  Toolbar();
+  Toolbar(float vertical_unit = kWindowHeight/8);
 
   /**
    * Checks to see if the given point is contained within the toolbar
@@ -62,10 +63,12 @@ class Toolbar {
  private:
   vec2 position_;
   vec2 dimensions_;
+  const ci::Area area_;
 
   Button draw_mode_;
   Button save_;
   Slider brush_size_;
+  Button undo_;
   ColorSelector color_selector_;
 };
 

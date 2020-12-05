@@ -8,6 +8,7 @@ enum CommandType {
   DrawMode,
   BrushSize,
   ColorChange,
+  Undo,
   Save
 };
 

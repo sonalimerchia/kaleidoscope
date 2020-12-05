@@ -61,8 +61,11 @@ void Sketchpad::MouseDragged(const ivec2 &loc) {
 }
 
 void Sketchpad::MouseUp() {
-  strokes_.push_back(maker_.GetStroke());
-  maker_.clear();
+  const stroke &new_stroke = maker_.GetStroke();
+  if (new_stroke.points_by_sector.at(0).size() != 0) {
+    strokes_.push_back(new_stroke);
+    maker_.clear();
+  }
 }
 
 void Sketchpad::SetBackground(const Color &color) {
@@ -70,6 +73,7 @@ void Sketchpad::SetBackground(const Color &color) {
 }
 
 void Sketchpad::Clear() {
+  history_.push_back(strokes_);
   strokes_.clear();
   maker_.clear();
 }
@@ -114,8 +118,21 @@ void Sketchpad::ChangeNumSectors(int change) {
     maker_.clear();
   }
 }
+
 void Sketchpad::SetColor(const ci::Color &color) {
   maker_.SetColor(color);
+}
+
+void Sketchpad::Undo() {
+  // If there are no strokes currently drawn, try to undo the last clear
+  if (strokes_.size() == 0 && history_.size() != 0) {
+    strokes_ = history_.back();
+    history_.pop_back();
+
+    // If there strokes currently drawn, undo the last
+  } else if (strokes_.size() != 0) {
+    strokes_.pop_back();
+  }
 }
 
 } // namespace visualizer

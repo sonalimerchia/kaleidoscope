@@ -85,10 +85,12 @@ class Sketchpad {
 
   void SetColor(const ci::Color &color);
 
+  void Undo();
+
  private:
   Color background_;
-  vector<size_t> clear_indexes_;
   vector<stroke> strokes_;
+  vector<vector<stroke>> history_;
   StrokeMaker maker_;
 };
 

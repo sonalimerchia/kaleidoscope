@@ -74,7 +74,7 @@ list(APPEND TEST_FILES
         test/button_test.cc
         test/slider_test.cc
         test/stroke_maker_test.cc
-        test/toolbar_test.cc)
+        test/color_selector_test.cc)
 
 ci_make_app(
         APP_NAME        kaleidoscope.cc

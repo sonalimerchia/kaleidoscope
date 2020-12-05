@@ -19,6 +19,9 @@ void KaleidoscopeApp::mouseUp(MouseEvent event) {
 void KaleidoscopeApp::mouseDrag(MouseEvent event) {
   // Respond to mouse activity in the toolbar
   if (toolbar_.ContainsPoint(event.getPos())) {
+    pad_.MouseUp();
+    needs_refresh_ = true;
+
     CommandType command = toolbar_.MouseDragged(event.getPos());
     ManageCommand(command);
 
@@ -31,6 +34,9 @@ void KaleidoscopeApp::mouseDrag(MouseEvent event) {
 void KaleidoscopeApp::mouseDown(MouseEvent event) {
   // Respond to mouse activity in the toolbar
   if (toolbar_.ContainsPoint(event.getPos())) {
+    pad_.MouseUp();
+    needs_refresh_ = true;
+
     CommandType command = toolbar_.MouseClicked(event.getPos());
     ManageCommand(command);
 
@@ -90,6 +96,10 @@ void KaleidoscopeApp::ManageCommand(const CommandType &command) {
 
     case CommandType::ColorChange:
       pad_.SetColor(toolbar_.GetColor());
+      return;
+
+    case CommandType::Undo:
+      pad_.Undo();
       return;
 
     // Save and quit

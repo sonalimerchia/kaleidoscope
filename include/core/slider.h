@@ -43,8 +43,9 @@ class Slider {
   float GetDegree();
 
  private:
-  const vec2 position_;
-  const vec2 dimensions_;
+  const ci::Area total_area_;
+  const ci::Area slider_area_;
+
   string message_;
   float degree_; // A number between 0 and 1 which describes the selected level
                  // of the slider where 0 represents being at the bottom of the slider

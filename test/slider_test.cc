@@ -1,6 +1,6 @@
 #include <glm/glm.hpp>
 #include <catch2/catch.hpp>
-#include <visualizer/slider.h>
+#include <core/slider.h>
 
 using glm::vec2;
 using glm::ivec2;

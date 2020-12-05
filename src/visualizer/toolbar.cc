@@ -79,7 +79,7 @@ bool Toolbar::ContainsPoint(const glm::ivec2 &mouse_loc) {
          mouse_loc.y >= position_.y &&
          mouse_loc.y <= position_.y + dimensions_.y;
 }
-const ci::Color &Toolbar::GetColor() {
+const ci::ColorA &Toolbar::GetColor() {
   return color_selector_.GetColor();
 }
 

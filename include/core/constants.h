@@ -15,6 +15,8 @@ static const size_t kWindowWidth = 1000;
 static const string kImagesFolderPath = "C:\\Users\\sonal\\Desktop\\CLion\\cinder\\final-project-sonalimerchia\\images";
 static const string kDefaultImageExtension = "png";
 
+static const string kPaletteFolderPath = "C:\\Users\\sonal\\Desktop\\CLion\\cinder\\final-project-sonalimerchia\\palette_images";
+
 // Drawing settings
 static const size_t kMinBrushSize = 1;
 static const size_t kMaxBrushSize = 40;

@@ -1,6 +1,6 @@
 #include <catch2/catch.hpp>
 #include <glm/glm.hpp>
-#include <visualizer/button.h>
+#include <core/button.h>
 
 using glm::vec2;
 using glm::ivec2;

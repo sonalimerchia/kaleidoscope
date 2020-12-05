@@ -1,4 +1,5 @@
 #include <glm/glm.hpp>
+#include <cinder/gl/gl.h>
 #include <string>
 
 #ifndef KALEIDOSCOPE_INCLUDE_BUTTON_H_
@@ -39,8 +40,8 @@ class Button {
   const string& GetMessage() const;
 
  private:
-  const vec2 position_;
-  const vec2 dimensions_;
+  const ci::Area area_;
+
   string message_;
 };
 

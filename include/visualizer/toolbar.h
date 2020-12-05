@@ -3,9 +3,9 @@
 #include "core/stroke_maker.h"
 #include "core/command_type.h"
 
-#include "button.h"
-#include "slider.h"
-#include "color_selector.h"
+#include "core/button.h"
+#include "core/slider.h"
+#include "core/color_selector.h"
 
 #ifndef KALEIDOSCOPE_INCLUDE_TOOLBAR_H_
 #define KALEIDOSCOPE_INCLUDE_TOOLBAR_H_
@@ -57,7 +57,7 @@ class Toolbar {
    */
   size_t GetBrushSize();
 
-  const ci::Color& GetColor();
+  const ci::ColorA& GetColor();
 
  private:
   vec2 position_;

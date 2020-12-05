@@ -19,6 +19,8 @@ class Sketchpad {
  public:
   Sketchpad();
 
+  void Draw();
+
   /**
    * Clear the current sketchpad and draw all the strokes passed in
    * @param strokes the strokes to be drawn
@@ -92,6 +94,8 @@ class Sketchpad {
   vector<stroke> strokes_;
   vector<vector<stroke>> history_;
   StrokeMaker maker_;
+
+  bool needs_refresh_;
 };
 
 } // namespace visualizer

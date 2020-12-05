@@ -60,7 +60,6 @@ class KaleidoscopeApp : public App {
  private:
   Sketchpad pad_;
   Toolbar toolbar_;
-  bool needs_refresh_;
 
   /**
    * Changes the sketchpad and settings as if a command of the given command type

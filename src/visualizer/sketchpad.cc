@@ -15,7 +15,17 @@ using std::vector;
 using ci::Color;
 
 Sketchpad::Sketchpad() {
+  needs_refresh_ = true;
   maker_.SetCenter(vec2(kWindowHeight/2, kWindowHeight/2));
+}
+
+void Sketchpad::Draw() {
+  if (needs_refresh_) {
+    ClearAndDraw();
+    needs_refresh_ = false;
+  } else {
+    DrawCurrentStroke();
+  }
 }
 
 void Sketchpad::ClearAndDraw() {
@@ -65,6 +75,7 @@ void Sketchpad::MouseUp() {
   if (new_stroke.points_by_sector.at(0).size() != 0) {
     strokes_.push_back(new_stroke);
     maker_.clear();
+    needs_refresh_ = true;
   }
 }
 
@@ -73,9 +84,12 @@ void Sketchpad::SetBackground(const Color &color) {
 }
 
 void Sketchpad::Clear() {
-  history_.push_back(strokes_);
-  strokes_.clear();
-  maker_.clear();
+  if (strokes_.size() > 0) {
+    history_.push_back(strokes_);
+    strokes_.clear();
+    maker_.clear();
+    needs_refresh_ = true;
+  }
 }
 
 void Sketchpad::SetBrushSize(size_t brush_size) {
@@ -128,12 +142,15 @@ void Sketchpad::Undo() {
   if (strokes_.size() == 0 && history_.size() != 0) {
     strokes_ = history_.back();
     history_.pop_back();
+    needs_refresh_ = true;
 
     // If there strokes currently drawn, undo the last
   } else if (strokes_.size() != 0) {
     strokes_.pop_back();
+    needs_refresh_ = true;
   }
 }
+
 
 } // namespace visualizer
 

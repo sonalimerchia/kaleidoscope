@@ -11,16 +11,14 @@ using ci::app::KeyEvent;
 using std::experimental::filesystem::path;
 
 void KaleidoscopeApp::mouseUp(MouseEvent event) {
-  // React to mouse up, refresh the pad
+  // React to mouse up
   pad_.MouseUp();
-  needs_refresh_ = true;
 }
 
 void KaleidoscopeApp::mouseDrag(MouseEvent event) {
   // Respond to mouse activity in the toolbar
   if (toolbar_.ContainsPoint(event.getPos())) {
     pad_.MouseUp();
-    needs_refresh_ = true;
 
     CommandType command = toolbar_.MouseDragged(event.getPos());
     ManageCommand(command);
@@ -35,7 +33,6 @@ void KaleidoscopeApp::mouseDown(MouseEvent event) {
   // Respond to mouse activity in the toolbar
   if (toolbar_.ContainsPoint(event.getPos())) {
     pad_.MouseUp();
-    needs_refresh_ = true;
 
     CommandType command = toolbar_.MouseClicked(event.getPos());
     ManageCommand(command);
@@ -47,15 +44,7 @@ void KaleidoscopeApp::mouseDown(MouseEvent event) {
 }
 
 void KaleidoscopeApp::draw() {
-  // Draw stroke in progress unless you need to refresh. In which case, draw all
-  if (needs_refresh_) {
-    pad_.ClearAndDraw();
-    needs_refresh_ = false;
-  } else {
-    pad_.DrawCurrentStroke();
-  }
-
-  // Draw the toolbar
+  pad_.Draw();
   toolbar_.Draw();
 }
 
@@ -64,25 +53,20 @@ void KaleidoscopeApp::setup() {
 
   // Set Up Pad
   pad_.SetBackground(kDefaultBackgroundColor);
-  needs_refresh_ = true;
 }
 
 void KaleidoscopeApp::keyDown(KeyEvent event) {
   // Clear if backspace is pressed
   if (event.getCode() == KeyEvent::KEY_BACKSPACE) {
     pad_.Clear();
-    needs_refresh_ = true;
 
     // Change number of sectors if arrow keys are used
   } else if (event.getCode() == KeyEvent::KEY_UP || event.getCode() == KeyEvent::KEY_DOWN) {
     pad_.ChangeNumSectors(event.getCode() == KeyEvent::KEY_UP ? 1 : -1);
-    needs_refresh_ = true;
   }
 }
 
 void KaleidoscopeApp::ManageCommand(const CommandType &command) {
-  needs_refresh_ = true;
-
   switch(command) {
     // Change mode of drawing from eraser to drawing or vice versa
     case CommandType::DrawMode:

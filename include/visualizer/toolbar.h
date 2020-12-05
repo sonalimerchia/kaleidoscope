@@ -57,6 +57,8 @@ class Toolbar {
    */
   size_t GetBrushSize();
 
+  const ci::Color& GetColor();
+
  private:
   vec2 position_;
   vec2 dimensions_;

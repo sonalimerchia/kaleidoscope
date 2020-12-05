@@ -33,6 +33,7 @@ CommandType Toolbar::MouseClicked(const ivec2 &loc) {
 
   } else if (color_selector_.WasEdited(loc)) {
     color_selector_.ChangeColor(loc);
+    return CommandType::ColorChange;
   }
 
   return CommandType::None;
@@ -45,6 +46,7 @@ CommandType Toolbar::MouseDragged(const ivec2 &loc) {
 
   } else if (color_selector_.WasEdited(loc)) {
     color_selector_.ChangeColor(loc);
+    return CommandType::ColorChange;
   }
 
   return CommandType::None;
@@ -76,6 +78,9 @@ bool Toolbar::ContainsPoint(const glm::ivec2 &mouse_loc) {
          mouse_loc.x <= position_.x + dimensions_.x &&
          mouse_loc.y >= position_.y &&
          mouse_loc.y <= position_.y + dimensions_.y;
+}
+const ci::Color &Toolbar::GetColor() {
+  return color_selector_.GetColor();
 }
 
 } // namespace visualizer

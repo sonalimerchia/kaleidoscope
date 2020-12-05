@@ -83,6 +83,8 @@ class Sketchpad {
    */
   void ChangeNumSectors(int change);
 
+  void SetColor(const ci::Color &color);
+
  private:
   Color background_;
   vector<size_t> clear_indexes_;

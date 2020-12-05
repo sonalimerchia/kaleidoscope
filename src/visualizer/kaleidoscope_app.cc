@@ -88,6 +88,10 @@ void KaleidoscopeApp::ManageCommand(const CommandType &command) {
       pad_.SetBrushSize(toolbar_.GetBrushSize());
       return;
 
+    case CommandType::ColorChange:
+      pad_.SetColor(toolbar_.GetColor());
+      return;
+
     // Save and quit
     case CommandType::Save:
       path path = getSaveFilePath(kImagesFolderPath);

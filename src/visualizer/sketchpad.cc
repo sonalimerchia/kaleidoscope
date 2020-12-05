@@ -114,6 +114,9 @@ void Sketchpad::ChangeNumSectors(int change) {
     maker_.clear();
   }
 }
+void Sketchpad::SetColor(const ci::Color &color) {
+  maker_.SetColor(color);
+}
 
 } // namespace visualizer
 

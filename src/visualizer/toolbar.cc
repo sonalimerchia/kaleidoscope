@@ -1,6 +1,8 @@
 #include <visualizer/toolbar.h>
-#include <core/constants.h>
 #include <cinder/gl/gl.h>
+
+#include <visualizer/sketchpad.h>
+#include <visualizer/kaleidoscope_app.h>
 
 namespace kaleidoscope {
 
@@ -10,26 +12,27 @@ using glm::vec2;
 using glm::ivec2;
 using std::string;
 
-Toolbar::Toolbar(float vertical_unit) :
-  area_(kWindowHeight, 0, kWindowWidth, kWindowHeight),
+Toolbar::Toolbar() :
+  area_(KaleidoscopeApp::kWindowHeight, 0,
+        KaleidoscopeApp::kWindowWidth, KaleidoscopeApp::kWindowHeight),
 
   draw_mode_(area_.getUL(),
-             glm::ivec2(area_.getWidth(), vertical_unit),
+             glm::ivec2(area_.getWidth(), KaleidoscopeApp::kWindowHeight/8),
              "Erase"),
 
-  brush_size_(area_.getUL() + glm::ivec2(0, vertical_unit),
-              glm::ivec2(area_.getWidth()/5, 2*vertical_unit),
+  brush_size_(area_.getUL() + glm::ivec2(0, KaleidoscopeApp::kWindowHeight/8),
+              glm::ivec2(area_.getWidth()/5, 2*KaleidoscopeApp::kWindowHeight/8),
               "Brush Size"),
 
-  color_selector_(area_.getUL() + glm::ivec2(0, 3*vertical_unit),
-                  glm::ivec2(area_.getWidth(), 3*vertical_unit)),
+  color_selector_(area_.getUL() + glm::ivec2(0, 3*KaleidoscopeApp::kWindowHeight/8),
+                  glm::ivec2(area_.getWidth(), 3*KaleidoscopeApp::kWindowHeight/8)),
 
-  undo_(area_.getUL() + glm::ivec2(0, 6*vertical_unit),
-        glm::ivec2(area_.getWidth(), vertical_unit),
+  undo_(area_.getUL() + glm::ivec2(0, 6*KaleidoscopeApp::kWindowHeight/8),
+        glm::ivec2(area_.getWidth(), KaleidoscopeApp::kWindowHeight/8),
         "Undo"),
 
-  save_(area_.getUL() + glm::ivec2(0, 7*vertical_unit),
-        glm::ivec2(area_.getWidth(), vertical_unit),
+  save_(area_.getUL() + glm::ivec2(0, 7*KaleidoscopeApp::kWindowHeight/8),
+        glm::ivec2(area_.getWidth(), KaleidoscopeApp::kWindowHeight/8),
         "Save") {}
 
 CommandType Toolbar::MouseClicked(const ivec2 &loc) {
@@ -70,7 +73,8 @@ CommandType Toolbar::MouseDragged(const ivec2 &loc) {
 }
 
 size_t Toolbar::GetBrushSize() {
-  float size = brush_size_.GetDegree()*(kMaxBrushSize - kMinBrushSize) + kMinBrushSize;
+  float size = brush_size_.GetDegree()*(Sketchpad::kMaxBrushSize - Sketchpad::kMinBrushSize);
+  size += Sketchpad::kMinBrushSize;
   return (size_t)(size);
 }
 

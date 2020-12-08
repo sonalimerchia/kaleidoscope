@@ -1,7 +1,7 @@
 #include <cinder/gl/gl.h>
 
 #include <core/slider.h>
-#include <core/constants.h>
+#include <core/button.h>
 
 namespace kaleidoscope {
 
@@ -11,10 +11,12 @@ using glm::vec2;
 using glm::ivec2;
 using std::string;
 
+const size_t Slider::kSliderTabHeight = 6;
+
 Slider::Slider(const vec2 &position, const vec2 &dimensions, const string &title) :
     total_area_(position, position + dimensions), message_(title),
     slider_area_((int)(position.x + dimensions.x/2.0f - kSliderTabHeight*2),
-                 (int)(position.y + kSliderTabHeight + kFontSize),
+                 (int)(position.y + kSliderTabHeight + Button::kFontSize),
                  (int)(position.x + dimensions.x/2.0f + kSliderTabHeight*2.0f),
                  (int)(position.y + dimensions.y)){
   degree_ = 0;
@@ -28,7 +30,8 @@ void Slider::Draw() const {
   // Draw title/background of slider
   ci::gl::color(ci::Color("white"));
   ci::gl::drawSolidRect(total_area_);
-  ci::gl::drawString(message_, total_area_.getUL(), ci::Color("black"), ci::Font(kFontStyle, kFontSize));
+  ci::gl::drawString(message_, total_area_.getUL(), ci::Color("black"),
+                     ci::Font(Button::kFontStyle, Button::kFontSize));
 
   // Draw line of slider
   ci::gl::color(ci::Color("black"));

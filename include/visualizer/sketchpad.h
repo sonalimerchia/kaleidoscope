@@ -17,10 +17,14 @@ using std::vector;
 
 class Sketchpad {
  public:
+  static const size_t kMinBrushSize;
+  static const size_t kMaxBrushSize;
+  static const ci::Color kDefaultBackgroundColor;
+  static const ci::Color kDefaultDrawingColor;
+
   Sketchpad();
 
   void Draw();
-
   /**
    * Clear the current sketchpad and draw all the strokes passed in
    * @param strokes the strokes to be drawn
@@ -93,9 +97,9 @@ class Sketchpad {
   Color background_;
   vector<stroke> strokes_;
   vector<vector<stroke>> history_;
-  StrokeMaker maker_;
+  StrokeMaker stroke_maker_;
 
-  bool needs_refresh_;
+  int refresher_;
 };
 
 } // namespace visualizer

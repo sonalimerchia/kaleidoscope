@@ -2,7 +2,7 @@
 #include <cinder/gl/gl.h>
 
 #include <core/color_selector.h>
-#include <core/constants.h>
+#include <visualizer/sketchpad.h>
 
 namespace kaleidoscope {
 
@@ -28,7 +28,7 @@ ColorSelector::ColorSelector(const glm::vec2 &position,
   slider_ = ci::Surface(slider_area_.getWidth(), 1, false);
 
   // Initialize default color
-  color_ = kDefaultDrawingColor;
+  color_ = Sketchpad::kDefaultDrawingColor;
   glm::vec3 hsv = color_.get(ci::ColorModel::CM_HSV);
   hue_ = hsv.x;
   saturation_ = hsv.y;

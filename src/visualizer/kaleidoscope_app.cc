@@ -1,5 +1,4 @@
 #include <visualizer/kaleidoscope_app.h>
-#include <core/constants.h>
 
 namespace kaleidoscope {
 
@@ -9,6 +8,11 @@ using glm::ivec2;
 using ci::app::MouseEvent;
 using ci::app::KeyEvent;
 using std::experimental::filesystem::path;
+
+const size_t KaleidoscopeApp::kWindowHeight = 750;
+const size_t KaleidoscopeApp::kWindowWidth = 1000;
+const std::string KaleidoscopeApp::kDefaultImageExtension = "png";
+const std::string KaleidoscopeApp::kImagesFolderPath = "C:\\Users\\sonal\\Desktop\\CLion\\cinder\\final-project-sonalimerchia\\images";
 
 void KaleidoscopeApp::mouseUp(MouseEvent event) {
   // React to mouse up
@@ -50,9 +54,6 @@ void KaleidoscopeApp::draw() {
 
 void KaleidoscopeApp::setup() {
   setWindowSize(kWindowWidth, kWindowHeight);
-
-  // Set Up Pad
-  pad_.SetBackground(kDefaultBackgroundColor);
 }
 
 void KaleidoscopeApp::keyDown(KeyEvent event) {

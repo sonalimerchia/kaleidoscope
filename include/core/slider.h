@@ -14,6 +14,8 @@ using std::string;
 
 class Slider {
  public:
+  static const size_t kSliderTabHeight;
+
   /**
    * Constructs a slider
    * @param position the location of the top left corner of the slider

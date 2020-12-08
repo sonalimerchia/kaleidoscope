@@ -14,7 +14,12 @@ using glm::ivec2;
 using std::string;
 
 class Button {
+
  public:
+  static const size_t kFontSize;
+  static const string kFontStyle;
+
+
   /**
    * Creates a button
    * @param position the top left corner of the button

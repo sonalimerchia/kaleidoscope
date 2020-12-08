@@ -14,6 +14,8 @@ using std::pair;
 
 class StrokeMaker {
  public:
+  static const size_t kDefaultNumSectors;
+
   StrokeMaker();
 
   /**

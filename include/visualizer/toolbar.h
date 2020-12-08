@@ -6,7 +6,6 @@
 #include "core/button.h"
 #include "core/slider.h"
 #include "core/color_selector.h"
-#include "core/constants.h"
 
 #ifndef KALEIDOSCOPE_INCLUDE_TOOLBAR_H_
 #define KALEIDOSCOPE_INCLUDE_TOOLBAR_H_
@@ -21,12 +20,13 @@ using glm::ivec2;
 class Toolbar {
 
  public:
+
   /**
    * Construct a toolbar
    */
-  Toolbar(float vertical_unit = kWindowHeight/8);
+  Toolbar();
 
-  /**
+/**
    * Checks to see if the given point is contained within the toolbar
    * @param loc the location being tested to see if it falls within the toolbar
    * @return true if the point is within the toolbar; false otherwise

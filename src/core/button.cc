@@ -1,7 +1,6 @@
 #include <cinder/gl/gl.h>
 
 #include <core/button.h>
-#include <core/constants.h>
 
 namespace kaleidoscope {
 
@@ -10,6 +9,9 @@ namespace visualizer {
 using glm::vec2;
 using glm::ivec2;
 using std::string;
+
+const size_t Button::kFontSize = 30;
+const string Button::kFontStyle = "arial";
 
 Button::Button(const vec2 &position, const vec2 &dimensions, const string &message) :
     area_(position, position + dimensions), message_(message) {}

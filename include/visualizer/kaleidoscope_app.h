@@ -8,6 +8,8 @@
 #include "visualizer/toolbar.h"
 #include "core/command_type.h"
 
+#include <string>
+
 #ifndef KALEIDOSCOPE_INCLUDE_KALEIDOSCOPE_APP_H_
 #define KALEIDOSCOPE_INCLUDE_KALEIDOSCOPE_APP_H_
 
@@ -22,6 +24,11 @@ using ci::app::KeyEvent;
 class KaleidoscopeApp : public App {
 
  public:
+  static const size_t kWindowHeight;
+  static const size_t kWindowWidth;
+  static const std::string kImagesFolderPath;
+  static const std::string kDefaultImageExtension;
+
   /**
    * Sets up the field variables of the app
    */

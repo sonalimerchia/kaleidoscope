@@ -2,8 +2,8 @@
 #include <glm/glm.hpp>
 #include <cinder/gl/gl.h>
 
-#include <core/constants.h>
 #include <visualizer/sketchpad.h>
+#include <visualizer/kaleidoscope_app.h>
 
 namespace kaleidoscope {
 
@@ -14,15 +14,26 @@ using glm::ivec2;
 using std::vector;
 using ci::Color;
 
+const size_t Sketchpad::kMinBrushSize = 1;
+const size_t Sketchpad::kMaxBrushSize = 40;
+
+const ci::Color Sketchpad::kDefaultBackgroundColor = ci::Color("white");
+const ci::Color Sketchpad::kDefaultDrawingColor = ci::Color("blue");
+
 Sketchpad::Sketchpad() {
-  needs_refresh_ = true;
-  maker_.SetCenter(vec2(kWindowHeight/2, kWindowHeight/2));
+  refresher_ = 10;
+
+  stroke_maker_.SetCenter(vec2(KaleidoscopeApp::kWindowHeight/2, KaleidoscopeApp::kWindowHeight/2));
+  stroke_maker_.SetBrushSize(kMinBrushSize);
+  stroke_maker_.SetColor(kDefaultDrawingColor);
+
+  background_ = kDefaultBackgroundColor;
 }
 
 void Sketchpad::Draw() {
-  if (needs_refresh_) {
+  if (refresher_ >= 0) {
     ClearAndDraw();
-    needs_refresh_ = false;
+    refresher_--;
   } else {
     DrawCurrentStroke();
   }
@@ -34,11 +45,11 @@ void Sketchpad::ClearAndDraw() {
   for (const stroke &stroke : strokes_) {
     DrawStroke(stroke);
   }
-  DrawStroke(maker_.GetStroke());
+  DrawStroke(stroke_maker_.GetStroke());
 }
 
 void Sketchpad::DrawCurrentStroke() {
-  DrawStroke(maker_.GetStroke());
+  DrawStroke(stroke_maker_.GetStroke());
 }
 
 void Sketchpad::DrawStroke(const stroke &stroke) {
@@ -63,19 +74,19 @@ void Sketchpad::DrawStroke(const stroke &stroke) {
 }
 
 void Sketchpad::MouseDown(const ivec2 &loc) {
-  maker_.StartNewStroke(loc);
+  stroke_maker_.StartNewStroke(loc);
 }
 
 void Sketchpad::MouseDragged(const ivec2 &loc) {
-  maker_.AddPointToStroke(loc);
+  stroke_maker_.AddPointToStroke(loc);
 }
 
 void Sketchpad::MouseUp() {
-  const stroke &new_stroke = maker_.GetStroke();
+  const stroke &new_stroke = stroke_maker_.GetStroke();
   if (new_stroke.points_by_sector.at(0).size() != 0) {
     strokes_.push_back(new_stroke);
-    maker_.clear();
-    needs_refresh_ = true;
+    stroke_maker_.clear();
+    refresher_ += 10;
   }
 }
 
@@ -87,29 +98,29 @@ void Sketchpad::Clear() {
   if (strokes_.size() > 0) {
     history_.push_back(strokes_);
     strokes_.clear();
-    maker_.clear();
-    needs_refresh_ = true;
+    stroke_maker_.clear();
+    refresher_ += 10;
   }
 }
 
 void Sketchpad::SetBrushSize(size_t brush_size) {
-  maker_.SetBrushSize(brush_size);
+  stroke_maker_.SetBrushSize(brush_size);
 }
 
 void Sketchpad::ChangeDrawMode() {
-  maker_.ChangeMode();
+  stroke_maker_.ChangeMode();
 }
 
 void Sketchpad::ChangeNumSectors(int change) {
   // Only do change if there will be between 2 and 360 sectors afterwards
-  if (change + maker_.GetNumSectors() <= 1 || change + maker_.GetNumSectors() >= 360) {
+  if (change + stroke_maker_.GetNumSectors() <= 1 || change + stroke_maker_.GetNumSectors() >= 360) {
     return;
   }
 
   // Save the initial strokes before resetting the pad and maker
   vector<stroke> old_strokes = strokes_;
   Clear();
-  maker_.SetNumSectors(maker_.GetNumSectors() + change);
+  stroke_maker_.SetNumSectors(stroke_maker_.GetNumSectors() + change);
 
   // Recalibrate old strokes
   for (const stroke &old : old_strokes) {
@@ -118,23 +129,23 @@ void Sketchpad::ChangeNumSectors(int change) {
     }
 
     // Set maker to old stroke's settings
-    maker_.SetBrushSize(old.brush_size);
-    maker_.SetColor(old.color);
+    stroke_maker_.SetBrushSize(old.brush_size);
+    stroke_maker_.SetColor(old.color);
 
     // Add all points from one sector in the old stroke to the maker
-    maker_.StartNewStroke(old.points_by_sector.at(0).at(0));
+    stroke_maker_.StartNewStroke(old.points_by_sector.at(0).at(0));
     for (size_t index = 1; index < old.points_by_sector.at(0).size(); index++) {
-      maker_.AddPointToStroke(old.points_by_sector.at(0).at(index));
+      stroke_maker_.AddPointToStroke(old.points_by_sector.at(0).at(index));
     }
 
     // Push back the resultant stroke and clear the maker
-    strokes_.push_back(maker_.GetStroke());
-    maker_.clear();
+    strokes_.push_back(stroke_maker_.GetStroke());
+    stroke_maker_.clear();
   }
 }
 
 void Sketchpad::SetColor(const ci::Color &color) {
-  maker_.SetColor(color);
+  stroke_maker_.SetColor(color);
 }
 
 void Sketchpad::Undo() {
@@ -142,13 +153,12 @@ void Sketchpad::Undo() {
   if (strokes_.size() == 0 && history_.size() != 0) {
     strokes_ = history_.back();
     history_.pop_back();
-    needs_refresh_ = true;
 
     // If there strokes currently drawn, undo the last
   } else if (strokes_.size() != 0) {
     strokes_.pop_back();
-    needs_refresh_ = true;
   }
+  refresher_+= 10;
 }
 
 

@@ -1,8 +1,8 @@
 #include <algorithm>
+#include <math.h>
 #include <cinder/gl/gl.h>
 
 #include <core/stroke_maker.h>
-#include <core/constants.h>
 
 namespace kaleidoscope {
 
@@ -12,11 +12,10 @@ using ci::Color;
 using std::vector;
 using std::pair;
 
+const size_t StrokeMaker::kDefaultNumSectors = 6;
+
 StrokeMaker::StrokeMaker() {
   current_stroke_.type = StrokeType::Draw;
-  current_stroke_.brush_size = kMinBrushSize;
-  current_stroke_.color = kDefaultDrawingColor;
-
   num_sectors_ = kDefaultNumSectors;
 }
 
@@ -31,7 +30,7 @@ void StrokeMaker::StartNewStroke(const ivec2 &point) {
 
 void StrokeMaker::AddPointToStroke(const glm::ivec2 &point) {
   const pair<float, float> &polar_point = CartesianToPolar(point);
-  float sector_angle = 2*PI/num_sectors_;
+  float sector_angle = 2*M_PI/num_sectors_;
 
   // make one point in each sector
   for (size_t sector = 0; sector < num_sectors_; sector++) {
@@ -80,7 +79,7 @@ pair<float, float> StrokeMaker::CartesianToPolar(const ivec2 &point) {
   theta *= (realigned_point.y > 0 ? -1 : 1);
 
   // Realign so connecting works well
-  float sector_angle = 2 * PI / num_sectors_;
+  float sector_angle = 2 * M_PI / num_sectors_;
   theta = sector_angle - theta;
 
   return pair<float, float>((float)(r), (float)(theta));

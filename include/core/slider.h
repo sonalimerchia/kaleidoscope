@@ -1,5 +1,6 @@
 #include <string>
 #include <glm/glm.hpp>
+#include <cinder/gl/gl.h>
 
 #ifndef KALEIDOSCOPE_INCLUDE_COMPONENTS_SLIDER_H_
 #define KALEIDOSCOPE_INCLUDE_COMPONENTS_SLIDER_H_

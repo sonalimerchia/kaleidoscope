@@ -13,13 +13,13 @@ TEST_CASE("Button corner cases") {
     REQUIRE(button.WasPressed(ivec2(1, 1)));
   }
   SECTION("Top-Right") {
-    REQUIRE(button.WasPressed(ivec2(11, 1)));
+    REQUIRE(button.WasPressed(ivec2(10, 1)));
   }
   SECTION("Bottom-Left") {
-    REQUIRE(button.WasPressed(ivec2(1, 11)));
+    REQUIRE(button.WasPressed(ivec2(1, 10)));
   }
   SECTION("Bottom-Right") {
-    REQUIRE(button.WasPressed(ivec2(11, 11)));
+    REQUIRE(button.WasPressed(ivec2(10, 10)));
   }
 }
 
@@ -27,16 +27,16 @@ TEST_CASE("Button edge cases") {
   Button button(vec2(1, 1), vec2(10, 10), "Corners");
 
   SECTION("Top") {
-    REQUIRE(button.WasPressed(ivec2(5, 1)));
+    REQUIRE(button.WasPressed(ivec2(5, 2)));
   }
   SECTION("Bottom") {
-    REQUIRE(button.WasPressed(ivec2(5, 11)));
+    REQUIRE(button.WasPressed(ivec2(5, 10)));
   }
   SECTION("Left") {
-    REQUIRE(button.WasPressed(ivec2(1, 5)));
+    REQUIRE(button.WasPressed(ivec2(2, 5)));
   }
   SECTION("Right") {
-    REQUIRE(button.WasPressed(ivec2(11, 5)));
+    REQUIRE(button.WasPressed(ivec2(10, 5)));
   }
 }
 

@@ -60,6 +60,10 @@ float Slider::GetDegree() const {
 void Slider::Slide(const ivec2 &mouse_loc) {
   float current_tab_loc = (float)(mouse_loc.y - slider_area_.getY1());
   degree_ = 1 - current_tab_loc / slider_area_.getHeight();
+
+  // Ensure degree doesn't go above 1 or below 0
+  degree_ = std::min(degree_, 1.0f);
+  degree_ = std::max(degree_, 0.0f);
 }
 
 } // namespace visualizer

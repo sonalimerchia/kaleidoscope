@@ -58,15 +58,15 @@ class Sketchpad {
 
   /**
    * React as if the mouse was dragged across the sketchpad
-   * @param loc the location of the mouse as it is dragged
+   * @param mouse_location the location of the mouse as it is dragged
    */
-  void MouseDragged(const ivec2 &loc);
+  void MouseDragged(const ivec2 &mouse_location);
 
   /**
    * React as if the mouse just pressed down on the sketchpad
-   * @param loc the location of the mouse as it is pressed down
+   * @param mouse_location the location of the mouse as it is pressed down
    */
-  void MouseDown(const ivec2 &loc);
+  void MouseDown(const ivec2 &mouse_location);
 
   /**
    * Clear the sketchpad such that next time ClearAndDraw() is called, the current strokes

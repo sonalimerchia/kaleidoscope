@@ -73,7 +73,7 @@ void Sketchpad::DrawStroke(const stroke &stroke) {
     ci::gl::begin(GL_LINE_STRIP);
     for (const vec2 &point : sector) {
       ci::gl::vertex(point);
-      ci::gl::drawSolidCircle(point, stroke.brush_size/2.0f);
+      ci::gl::drawSolidCircle(point, 0.5f*stroke.brush_size);
     }
     ci::gl::end();
   }
@@ -167,7 +167,6 @@ void Sketchpad::Undo() {
   }
   refresher_+= kRefreshConstant;
 }
-
 
 } // namespace visualizer
 

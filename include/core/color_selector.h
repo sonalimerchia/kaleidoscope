@@ -38,17 +38,17 @@ class ColorSelector {
   /**
    * Check to see if mouse activity in the given location would change the color
    *
-   * @param mouse_loc the location of the mouse activity in the window
+   * @param mouse_location the location of the mouse activity in the window
    * @return true if the mouse activity would change the color; false otherwise
    */
-  bool WasEdited(const ivec2 &mouse_loc) const;
+  bool WasEdited(const ivec2 &mouse_location) const;
 
   /**
    * Change the color of the color selector according to user activity
    *
-   * @param mouse_loc the location of the mouse activity
+   * @param mouse_location the location of the mouse activity
    */
-  void ChangeColor(const ivec2 &mouse_loc);
+  void ChangeColor(const ivec2 &mouse_location);
 
  private:
   // The areas occupied by the different components

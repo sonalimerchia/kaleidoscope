@@ -26,10 +26,10 @@ class Slider {
 
   /**
    * Determines whether mouse activity in that location would change the slider
-   * @param mouse_loc the location on the slider where the mouse clicked/was dragged
+   * @param mouse_location the location on the slider where the mouse clicked/was dragged
    * @return true if the slider would have been edited; false otherwise
    */
-  bool WasEdited(const ivec2 &mouse_loc) const;
+  bool WasEdited(const ivec2 &mouse_location) const;
 
   /**
    * Edits the values of the slider in accordance with the mouse activity
@@ -42,7 +42,7 @@ class Slider {
    */
   void Draw() const;
 
-  float GetDegree();
+  float GetDegree() const;
 
  private:
   const ci::Area total_area_;

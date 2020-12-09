@@ -53,7 +53,7 @@ void Slider::Draw() const {
                         vec2(slider_area_.getX2(), box_ul_y + kSliderTabHeight)));
 }
 
-float Slider::GetDegree() {
+float Slider::GetDegree() const {
   return degree_;
 }
 

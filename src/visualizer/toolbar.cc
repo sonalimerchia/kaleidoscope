@@ -74,13 +74,7 @@ CommandType Toolbar::MouseDragged(const ivec2 &loc) {
   return CommandType::None;
 }
 
-size_t Toolbar::GetBrushSize() {
-  float size = brush_size_.GetDegree()*(Sketchpad::kMaxBrushSize - Sketchpad::kMinBrushSize);
-  size += Sketchpad::kMinBrushSize;
-  return (size_t)(size);
-}
-
-void Toolbar::Draw() {
+void Toolbar::Draw() const {
   ci::gl::lineWidth(1);
 
   // Draw toolbar background
@@ -97,14 +91,20 @@ void Toolbar::Draw() {
   color_selector_.Draw();
 
   ci::gl::color(color_selector_.GetColor());
-  ci::gl::drawSolidCircle(brush_display_, (float) (GetBrushSize()));
+  ci::gl::drawSolidCircle(brush_display_, GetBrushSize()/2.0f);
 }
 
-bool Toolbar::ContainsPoint(const ivec2 &mouse_loc) {
+bool Toolbar::ContainsPoint(const ivec2 &mouse_loc) const {
   return area_.contains(mouse_loc);
 }
 
-const ci::ColorA &Toolbar::GetColor() {
+size_t Toolbar::GetBrushSize() const {
+  float size = brush_size_.GetDegree()*(Sketchpad::kMaxBrushSize - Sketchpad::kMinBrushSize);
+  size += Sketchpad::kMinBrushSize;
+  return (size_t)(size);
+}
+
+const ci::ColorA &Toolbar::GetColor() const {
   return color_selector_.GetColor();
 }
 

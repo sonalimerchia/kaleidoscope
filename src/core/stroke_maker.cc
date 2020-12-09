@@ -17,6 +17,7 @@ const size_t StrokeMaker::kDefaultNumSectors = 6;
 StrokeMaker::StrokeMaker() {
   current_stroke_.type = StrokeType::Draw;
   num_sectors_ = kDefaultNumSectors;
+  clear();
 }
 
 const stroke& StrokeMaker::GetStroke() const {

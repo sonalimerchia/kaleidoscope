@@ -1,5 +1,5 @@
-#include <visualizer/toolbar.h>
 #include <cinder/gl/gl.h>
+#include <visualizer/toolbar.h>
 
 #include <visualizer/sketchpad.h>
 #include <visualizer/kaleidoscope_app.h>
@@ -33,7 +33,9 @@ Toolbar::Toolbar() :
 
   save_(area_.getUL() + ivec2(0, 7*KaleidoscopeApp::kWindowHeight/8),
         ivec2(area_.getWidth(), KaleidoscopeApp::kWindowHeight/8),
-        "Save") {}
+        "Save"),
+
+  brush_display_(area_.getUL() + ivec2(3*area_.getWidth()/5, 2*KaleidoscopeApp::kWindowHeight/8)) {}
 
 CommandType Toolbar::MouseClicked(const ivec2 &loc) {
   if (draw_mode_.WasPressed(loc)) {
@@ -93,11 +95,15 @@ void Toolbar::Draw() {
   undo_.Draw();
   save_.Draw();
   color_selector_.Draw();
+
+  ci::gl::color(color_selector_.GetColor());
+  ci::gl::drawSolidCircle(brush_display_, (float) (GetBrushSize()));
 }
 
 bool Toolbar::ContainsPoint(const ivec2 &mouse_loc) {
   return area_.contains(mouse_loc);
 }
+
 const ci::ColorA &Toolbar::GetColor() {
   return color_selector_.GetColor();
 }

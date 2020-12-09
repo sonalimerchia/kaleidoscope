@@ -61,8 +61,6 @@ class Toolbar {
   const ci::ColorA& GetColor();
 
  private:
-  vec2 position_;
-  vec2 dimensions_;
   const ci::Area area_;
 
   Button draw_mode_;
@@ -70,6 +68,7 @@ class Toolbar {
   Slider brush_size_;
   Button undo_;
   ColorSelector color_selector_;
+  vec2 brush_display_;
 };
 
 } // namespace visualizer

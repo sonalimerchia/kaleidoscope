@@ -50,7 +50,7 @@ void StrokeMaker::ChangeMode() {
   current_stroke_.type = current_stroke_.type == StrokeType::Draw ? StrokeType::Erase : StrokeType::Draw;
 }
 
-size_t StrokeMaker::GetNumSectors() {
+size_t StrokeMaker::GetNumSectors() const {
   return num_sectors_;
 }
 

@@ -58,8 +58,8 @@ float Slider::GetDegree() const {
 }
 
 void Slider::Slide(const ivec2 &mouse_loc) {
-  float current_loc_on_slider = (float)(mouse_loc.y - slider_area_.getY1());
-  degree_ = 1 - current_loc_on_slider / slider_area_.getHeight();
+  float current_tab_loc = (float)(mouse_loc.y - slider_area_.getY1());
+  degree_ = 1 - current_tab_loc / slider_area_.getHeight();
 }
 
 } // namespace visualizer

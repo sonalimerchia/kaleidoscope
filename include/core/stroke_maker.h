@@ -67,7 +67,7 @@ class StrokeMaker {
 
 
   /*  Getter and Setter methods */
-  size_t GetNumSectors();
+  size_t GetNumSectors() const;
   void SetCenter(const vec2 &center);
 
  private:

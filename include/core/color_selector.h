@@ -95,7 +95,6 @@ class ColorSelector {
    */
   void RefreshPalette();
 
-
   /**
    * Refresh the surface that holds the gradient of the slider drawn by
    * DrawValueSlider(). Generating the surface such that its image is saved

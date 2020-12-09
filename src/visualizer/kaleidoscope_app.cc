@@ -15,6 +15,7 @@ using std::experimental::filesystem::path;
 
 const size_t KaleidoscopeApp::kWindowHeight = 750;
 const size_t KaleidoscopeApp::kWindowWidth = 1000;
+
 const std::string KaleidoscopeApp::kDefaultImageExtension = "png";
 const std::string KaleidoscopeApp::kImagesFolderPath = "C:\\Users\\sonal\\Desktop\\CLion\\cinder\\final-project-sonalimerchia\\images";
 
@@ -83,10 +84,12 @@ void KaleidoscopeApp::ManageCommand(const CommandType &command) {
       pad_.SetBrushSize(toolbar_.GetBrushSize());
       return;
 
+    // Change drawing color
     case CommandType::ColorChange:
-      pad_.SetColor(toolbar_.GetColor());
+      pad_.SetBrushColor(toolbar_.GetColor());
       return;
 
+    // Undo last action
     case CommandType::Undo:
       pad_.Undo();
       return;

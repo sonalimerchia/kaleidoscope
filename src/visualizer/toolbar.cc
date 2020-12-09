@@ -38,21 +38,26 @@ Toolbar::Toolbar() :
   brush_display_(area_.getUL() + ivec2(3*area_.getWidth()/5, 2*KaleidoscopeApp::kWindowHeight/8)) {}
 
 CommandType Toolbar::MouseClicked(const ivec2 &loc) {
+  // Switch draw modes if erase/draw button clicked
   if (draw_mode_.WasPressed(loc)) {
     string title = draw_mode_.GetMessage() == "Erase" ? "Draw" : "Erase";
     draw_mode_.SetMessage(title);
     return CommandType::DrawMode;
 
+    // Indicate brush size change if slider edited
   } else if (brush_size_.WasEdited(loc)) {
     brush_size_.Slide(loc);
     return CommandType::BrushSize;
 
+    // Indicate save if save button is pressed
   } else if (save_.WasPressed(loc)) {
     return CommandType::Save;
 
+    // Indicate undo last stroke/action if undo button clicked
   } else if (undo_.WasPressed(loc)) {
     return CommandType::Undo;
 
+    // Indicate color change if selector edited
   } else if (color_selector_.WasEdited(loc)) {
       color_selector_.ChangeColor(loc);
       return CommandType::ColorChange;
@@ -62,10 +67,12 @@ CommandType Toolbar::MouseClicked(const ivec2 &loc) {
 }
 
 CommandType Toolbar::MouseDragged(const ivec2 &loc) {
+  // Change brush size if slider edited
   if (brush_size_.WasEdited(loc)) {
     brush_size_.Slide(loc);
     return CommandType::BrushSize;
 
+    // Change color if color selector edited
   } else if (color_selector_.WasEdited(loc)) {
     color_selector_.ChangeColor(loc);
     return CommandType::ColorChange;

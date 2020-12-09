@@ -27,19 +27,23 @@ const Color Sketchpad::kDefaultDrawingColor = Color("blue");
 const int Sketchpad::kRefreshConstant = 10;
 
 Sketchpad::Sketchpad() {
+  // Set up pad
   refresher_ = kRefreshConstant;
+  background_ = kDefaultBackgroundColor;
 
+  // Set up maker
   stroke_maker_.SetCenter(vec2(KaleidoscopeApp::kWindowHeight/2, KaleidoscopeApp::kWindowHeight/2));
   stroke_maker_.SetBrushSize(kMinBrushSize);
   stroke_maker_.SetColor(kDefaultDrawingColor);
-
-  background_ = kDefaultBackgroundColor;
 }
 
 void Sketchpad::Draw() {
+  // Clear and draw if needs to be refreshed
   if (refresher_ >= 0) {
     ClearAndDraw();
     refresher_--;
+
+    // Just draw current stroke if doesn't need refreshing
   } else {
     DrawCurrentStroke();
   }
@@ -89,6 +93,8 @@ void Sketchpad::MouseDragged(const ivec2 &loc) {
 
 void Sketchpad::MouseUp() {
   const stroke &new_stroke = stroke_maker_.GetStroke();
+
+  // Add new stroke to pad, clear maker, and refresh pad
   if (new_stroke.points_by_sector.at(0).size() != 0) {
     strokes_.push_back(new_stroke);
     stroke_maker_.clear();
@@ -96,15 +102,14 @@ void Sketchpad::MouseUp() {
   }
 }
 
-void Sketchpad::SetBackground(const Color &color) {
-  background_ = color;
-}
-
 void Sketchpad::Clear() {
   if (strokes_.size() > 0) {
+    // Clear current strokes, saving copy in case of undo
     history_.push_back(strokes_);
     strokes_.clear();
     stroke_maker_.clear();
+
+    // Refresh the pad
     refresher_ += kRefreshConstant;
   }
 }
@@ -147,11 +152,13 @@ void Sketchpad::ChangeNumSectors(int change) {
 
     // Push back the resultant stroke and clear the maker
     strokes_.push_back(stroke_maker_.GetStroke());
+    strokes_.back().type = old.type;
+
     stroke_maker_.clear();
   }
 }
 
-void Sketchpad::SetColor(const Color &color) {
+void Sketchpad::SetBrushColor(const Color &color) {
   stroke_maker_.SetColor(color);
 }
 
@@ -165,6 +172,8 @@ void Sketchpad::Undo() {
   } else if (strokes_.size() != 0) {
     strokes_.pop_back();
   }
+
+  // Refresh the pad
   refresher_+= kRefreshConstant;
 }
 

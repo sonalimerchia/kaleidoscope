@@ -19,10 +19,13 @@ class Sketchpad {
  public:
   static const size_t kMinBrushSize;
   static const size_t kMaxBrushSize;
-  static const ci::Color kDefaultBackgroundColor;
-  static const ci::Color kDefaultDrawingColor;
+
   static const size_t kMinSectors;
   static const size_t kMaxSectors;
+
+  static const ci::Color kDefaultBackgroundColor;
+  static const ci::Color kDefaultDrawingColor;
+
   static const int kRefreshConstant;
 
   Sketchpad();
@@ -44,12 +47,6 @@ class Sketchpad {
    * @param stroke the stroke to be drawn
    */
   void DrawStroke(const stroke &stroke);
-
-  /**
-   * Set the background of the sketchpad to the color passed in
-   * @param color the new color of the sketchpad
-   */
-  void SetBackground(const Color &color);
 
   /**
    * React as if the mouse was lifted up
@@ -92,8 +89,15 @@ class Sketchpad {
    */
   void ChangeNumSectors(int change);
 
-  void SetColor(const ci::Color &color);
+  /**
+   * Change the color that the sketchpad is currently drawing in to the color passed in
+   * @param color the new color to begin drawing in
+   */
+  void SetBrushColor(const Color &color);
 
+  /**
+   * Remove the last drawn stroke or undo the last change in the number of sectors
+   */
   void Undo();
 
  private:

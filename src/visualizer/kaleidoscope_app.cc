@@ -7,7 +7,6 @@ namespace visualizer {
 using glm::ivec2;
 
 using ci::Area;
-using ci::writeImage;
 using ci::app::MouseEvent;
 using ci::app::KeyEvent;
 
@@ -17,7 +16,7 @@ const size_t KaleidoscopeApp::kWindowHeight = 750;
 const size_t KaleidoscopeApp::kWindowWidth = 1000;
 
 const std::string KaleidoscopeApp::kDefaultImageExtension = "png";
-const std::string KaleidoscopeApp::kImagesFolderPath = "C:\\Users\\sonal\\Desktop\\CLion\\cinder\\final-project-sonalimerchia\\images";
+const std::string KaleidoscopeApp::kImagesFolderPath = "images";
 
 void KaleidoscopeApp::mouseUp(MouseEvent event) {
   // React to mouse up
@@ -100,7 +99,7 @@ void KaleidoscopeApp::ManageCommand(const CommandType &command) {
       if (!path.has_extension()) {
         path.replace_extension(kDefaultImageExtension);
       }
-      writeImage(path, copyWindowSurface(Area(ivec2(0, 0),
+      ci::writeImage(path, copyWindowSurface(Area(ivec2(0, 0),
                                                       ivec2(kWindowHeight, kWindowHeight))));
       quit();
   }

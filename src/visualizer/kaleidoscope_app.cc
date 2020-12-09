@@ -12,8 +12,8 @@ using ci::app::KeyEvent;
 
 using std::experimental::filesystem::path;
 
-const size_t KaleidoscopeApp::kWindowHeight = 750;
-const size_t KaleidoscopeApp::kWindowWidth = 1000;
+const size_t KaleidoscopeApp::kWindowHeight = 1000;
+const size_t KaleidoscopeApp::kWindowWidth = 1500;
 
 const std::string KaleidoscopeApp::kDefaultImageExtension = "png";
 const std::string KaleidoscopeApp::kImagesFolderPath = "images";

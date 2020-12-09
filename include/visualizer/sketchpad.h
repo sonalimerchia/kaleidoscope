@@ -96,7 +96,7 @@ class Sketchpad {
   void SetBrushColor(const Color &color);
 
   /**
-   * Remove the last drawn stroke or undo the last change in the number of sectors
+   * Remove the last drawn stroke
    */
   void Undo();
 

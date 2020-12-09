@@ -130,9 +130,11 @@ void Sketchpad::ChangeNumSectors(int change) {
     return;
   }
 
-  // Save the initial strokes before resetting the pad and maker
+  // Remove the initial strokes before resetting the pad and maker
   vector<stroke> old_strokes = strokes_;
   Clear();
+  history_.pop_back();
+
   stroke_maker_.SetNumSectors(stroke_maker_.GetNumSectors() + change);
 
   // Recalibrate old strokes

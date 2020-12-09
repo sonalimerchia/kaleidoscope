@@ -41,6 +41,11 @@ class Slider {
    */
   void Draw() const;
 
+  /**
+   * @return A number between 0 and 1 which describes the selected level of the
+   * slider where 0 represents being at the bottom of the slider and 1
+   * represents being at the top
+   */
   float GetDegree() const;
 
  private:
@@ -48,9 +53,7 @@ class Slider {
   const ci::Area slider_area_;
 
   string message_;
-  float degree_; // A number between 0 and 1 which describes the selected level
-                 // of the slider where 0 represents being at the bottom of the slider
-                 // and 1 represents being at the top
+  float degree_;
 };
 
 } // namespace kaleidoscope

@@ -56,6 +56,9 @@ class Toolbar {
    */
   size_t GetBrushSize() const;
 
+  /**
+   * @return the color currently indicated on the color selector
+   */
   const ci::ColorA& GetColor() const;
 
  private:

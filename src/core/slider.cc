@@ -13,11 +13,6 @@ using ci::Rectf;
 using ci::Color;
 using ci::Font;
 
-using ci::gl::drawSolidRect;
-using ci::gl::color;
-using ci::gl::drawLine;
-using ci::gl::drawString;
-
 const size_t Slider::kSliderTabHeight = 6;
 
 Slider::Slider(const vec2 &position, const vec2 &dimensions, const string &title) :
@@ -35,19 +30,19 @@ bool Slider::WasEdited(const ivec2 &mouse_loc) const {
 
 void Slider::Draw() const {
   // Draw title/background of slider
-  color(Color("white"));
-  drawSolidRect(total_area_);
-  drawString(message_, total_area_.getUL(), Color("black"),
+  ci::gl::color(Color("white"));
+  ci::gl::drawSolidRect(total_area_);
+  ci::gl::drawString(message_, total_area_.getUL(), Color("black"),
                      Font(Button::kFontStyle, Button::kFontSize));
 
   // Draw line of slider
-  color(Color("black"));
-  drawLine(vec2(slider_area_.getCenter().x, slider_area_.getY1()),
+  ci::gl::color(Color("black"));
+  ci::gl::drawLine(vec2(slider_area_.getCenter().x, slider_area_.getY1()),
                    vec2(slider_area_.getCenter().x, slider_area_.getY2()));
 
   // Draw tab to show current value of slider
   float box_ul_y = slider_area_.getY2() - degree_ * slider_area_.getHeight();
-  drawSolidRect(Rectf(vec2(slider_area_.getX1(), box_ul_y - kSliderTabHeight),
+  ci::gl::drawSolidRect(Rectf(vec2(slider_area_.getX1(), box_ul_y - kSliderTabHeight),
                         vec2(slider_area_.getX2(), box_ul_y + kSliderTabHeight)));
 }
 

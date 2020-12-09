@@ -32,7 +32,8 @@ Sketchpad::Sketchpad() {
   background_ = kDefaultBackgroundColor;
 
   // Set up maker
-  stroke_maker_.SetCenter(vec2(KaleidoscopeApp::kWindowHeight/2, KaleidoscopeApp::kWindowHeight/2));
+  stroke_maker_.SetCenter(vec2(KaleidoscopeApp::kWindowHeight/2,
+                               KaleidoscopeApp::kWindowHeight/2));
   stroke_maker_.SetBrushSize(kMinBrushSize);
   stroke_maker_.SetColor(kDefaultDrawingColor);
 }

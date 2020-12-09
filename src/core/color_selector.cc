@@ -15,12 +15,6 @@ using ci::ColorModel;
 using ci::gl::Texture2d;
 using ci::Surface;
 
-using ci::gl::color;
-using ci::gl::draw;
-using ci::gl::drawLine;
-using ci::gl::drawStrokedCircle;
-using ci::gl::drawSolidRect;
-
 using glm::ivec2;
 using glm::vec2;
 
@@ -54,8 +48,8 @@ void ColorSelector::Draw() const {
   DrawValueSlider();
 
   // Draw Color Display
-  color(color_);
-  drawSolidRect(color_display_area_);
+  ci::gl::color(color_);
+  ci::gl::drawSolidRect(color_display_area_);
 }
 
 const ColorA& ColorSelector::GetColor() const {
@@ -68,7 +62,7 @@ bool ColorSelector::WasEdited(const ivec2 &mouse_location) const {
 void ColorSelector::ChangeColor(const ivec2 &mouse_location) {
   // Adjust Hue/Saturation and change Value Display accordingly
   if (palette_area_.contains(mouse_location)) {
-    ChangeHueNSaturation(mouse_location);
+    ChangeHueAndSaturation(mouse_location);
     RefreshSlider();
 
     // Adjust Value and change Hue/Saturation Display accordingly
@@ -82,28 +76,28 @@ void ColorSelector::ChangeColor(const ivec2 &mouse_location) {
 
 void ColorSelector::DrawValueSlider() const {
   // Draw slider
-  color(Color("white"));
-  draw(Texture2d::create(slider_), slider_area_);
+  ci::gl::color(Color("white"));
+  ci::gl::draw(Texture2d::create(slider_), slider_area_);
 
   // Draw line on slider to show current color
-  color(Colorf(ColorModel::CM_HSV, 1-hue_, 1-saturation_, 1-value_));
-  drawLine(vec2(slider_area_.getX1() + value_ * slider_area_.getWidth(), slider_area_.getY1()),
+  ci::gl::color(Colorf(ColorModel::CM_HSV, 1-hue_, 1-saturation_, 1-value_));
+  ci::gl::drawLine(vec2(slider_area_.getX1() + value_ * slider_area_.getWidth(), slider_area_.getY1()),
                    vec2(slider_area_.getX1() + value_ * slider_area_.getWidth(), slider_area_.getY2()));
 }
 
 void ColorSelector::DrawHueSaturationPalette() const {
   // Draw palette area
-  color(Color("white"));
-  draw(Texture2d::create(palette_), palette_area_);
+  ci::gl::color(Color("white"));
+  ci::gl::draw(Texture2d::create(palette_), palette_area_);
 
   // Draw circle on slider to show current color
-  color(Colorf(ColorModel::CM_HSV, 1-hue_, 1-saturation_, 1-value_));
+  ci::gl::color(Colorf(ColorModel::CM_HSV, 1-hue_, 1-saturation_, 1-value_));
   ivec2 relative_color_loc(hue_*palette_area_.getWidth(),
                                  (1-saturation_)*palette_area_.getHeight());
-  drawStrokedCircle(relative_color_loc + palette_area_.getUL(),2);
+  ci::gl::drawStrokedCircle(relative_color_loc + palette_area_.getUL(),2);
 }
 
-void ColorSelector::ChangeHueNSaturation(const ivec2 &mouse_location) {
+void ColorSelector::ChangeHueAndSaturation(const ivec2 &mouse_location) {
   // Get location on Hue/Saturation Palette
   vec2 relative_loc = mouse_location - palette_area_.getUL();
 

@@ -11,10 +11,6 @@ using std::string;
 using ci::Color;
 using ci::Font;
 
-using ci::gl::color;
-using ci::gl::drawSolidRect;
-using ci::gl::drawStringCentered;
-
 const float Button::kFontSize = 30;
 const string Button::kFontStyle = "arial";
 
@@ -31,12 +27,13 @@ void Button::SetMessage(const string &new_message) {
 
 void Button::Draw() const {
   // Draw button background
-  color(Color("black"));
-  drawSolidRect(area_);
+  ci::gl::color(Color("black"));
+  ci::gl::drawSolidRect(area_);
 
   // Write on Button
   vec2 string_loc = area_.getCenter() - vec2(0, kFontSize/2);
-  drawStringCentered(message_, string_loc, Color("white"), Font(kFontStyle, kFontSize));
+  ci::gl::drawStringCentered(message_, string_loc, Color("white"),
+                             Font(kFontStyle, kFontSize));
 }
 
 const string &Button::GetMessage() const {

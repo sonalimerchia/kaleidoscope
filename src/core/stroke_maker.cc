@@ -6,11 +6,12 @@
 
 namespace kaleidoscope {
 
+using std::vector;
+using std::pair;
+
 using glm::vec2;
 using glm::ivec2;
 using ci::Color;
-using std::vector;
-using std::pair;
 
 const size_t StrokeMaker::kDefaultNumSectors = 6;
 

@@ -111,7 +111,7 @@ class ColorSelector {
    * @param mouse_location the location of the mouse activity that affects hue or
    * saturation
    */
-  void ChangeHueNSaturation(const ivec2 &mouse_location);
+  void ChangeHueAndSaturation(const ivec2 &mouse_location);
 
   /**
    * Change the value component of the current color's HSV according to mouse

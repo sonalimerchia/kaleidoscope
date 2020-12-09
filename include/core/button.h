@@ -8,8 +8,6 @@
 
 namespace kaleidoscope {
 
-namespace visualizer {
-
 using glm::vec2;
 using glm::ivec2;
 using ci::Area;
@@ -51,8 +49,6 @@ class Button {
   string message_;
 
 };
-
-} // namespace visualizer
 
 } // namespace kaleidoscope
 

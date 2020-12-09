@@ -7,8 +7,6 @@
 
 namespace kaleidoscope {
 
-namespace visualizer {
-
 using glm::vec2;
 using glm::ivec2;
 using std::string;
@@ -54,8 +52,6 @@ class Slider {
                  // of the slider where 0 represents being at the bottom of the slider
                  // and 1 represents being at the top
 };
-
-} // namespace visualizer
 
 } // namespace kaleidoscope
 

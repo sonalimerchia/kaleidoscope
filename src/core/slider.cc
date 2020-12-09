@@ -5,8 +5,6 @@
 
 namespace kaleidoscope {
 
-namespace visualizer {
-
 using glm::vec2;
 using glm::ivec2;
 using std::string;
@@ -65,7 +63,5 @@ void Slider::Slide(const ivec2 &mouse_loc) {
   degree_ = std::min(degree_, 1.0f);
   degree_ = std::max(degree_, 0.0f);
 }
-
-} // namespace visualizer
 
 } // namespace kaleidoscope

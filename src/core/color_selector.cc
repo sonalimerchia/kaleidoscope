@@ -6,8 +6,6 @@
 
 namespace kaleidoscope {
 
-namespace visualizer {
-
 using ci::Color;
 using ci::ColorAf;
 using ci::Colorf;
@@ -39,7 +37,7 @@ ColorSelector::ColorSelector(const ivec2 &position, const ivec2 &dimensions) :
   slider_ = Surface(slider_area_.getWidth(), 1, false);
 
   // Initialize default color
-  color_ = Sketchpad::kDefaultDrawingColor;
+  color_ = visualizer::Sketchpad::kDefaultDrawingColor;
   glm::vec3 hsv = color_.get(ColorModel::CM_HSV);
   hue_ = hsv.x;
   saturation_ = hsv.y;
@@ -111,7 +109,7 @@ void ColorSelector::ChangeHueNSaturation(const ivec2 &mouse_location) {
 
   // Adjust hue and saturation accordingly
   hue_ = relative_loc.x/palette_area_.getWidth();
-  saturation_ = 1 - relative_loc.y/palette_area_.getHeight();
+  saturation_ = (palette_area_.getHeight() - relative_loc.y)/palette_area_.getHeight();
 }
 
 void ColorSelector::ChangeValue(const ivec2 &mouse_location) {
@@ -146,7 +144,5 @@ void ColorSelector::RefreshSlider() {
     slider_.setPixel(ivec2(x, 0), color);
   }
 }
-
-} // namespace visualizer
 
 } // namespace kaleidoscope

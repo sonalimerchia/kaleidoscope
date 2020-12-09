@@ -4,7 +4,7 @@
 
 using glm::vec2;
 using glm::ivec2;
-using kaleidoscope::visualizer::Button;
+using kaleidoscope::Button;
 
 TEST_CASE("Button corner cases") {
   Button button(vec2(1, 1), vec2(10, 10), "Corners");

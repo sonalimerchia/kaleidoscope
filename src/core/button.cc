@@ -4,8 +4,6 @@
 
 namespace kaleidoscope {
 
-namespace visualizer {
-
 using glm::vec2;
 using glm::ivec2;
 using std::string;
@@ -44,7 +42,5 @@ void Button::Draw() const {
 const string &Button::GetMessage() const {
   return message_;
 }
-
-} // namespace visualizer
 
 } // namespace kaleidoscope

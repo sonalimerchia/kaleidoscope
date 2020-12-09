@@ -4,7 +4,7 @@
 
 using glm::vec2;
 using glm::ivec2;
-using kaleidoscope::visualizer::Slider;
+using kaleidoscope::Slider;
 
 float roundToFivePlaces(float original) {
   return (int)(100000*original)/100000.0f;

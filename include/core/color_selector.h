@@ -6,8 +6,6 @@
 
 namespace kaleidoscope {
 
-namespace visualizer {
-
 using glm::vec2;
 using glm::ivec2;
 
@@ -123,8 +121,6 @@ class ColorSelector {
    */
   void ChangeValue(const ivec2 &mouse_location);
 };
-
-} // namespace visualizer
 
 } // namespace kaleidoscope
 

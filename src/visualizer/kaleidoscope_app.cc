@@ -5,8 +5,12 @@ namespace kaleidoscope {
 namespace visualizer {
 
 using glm::ivec2;
+
+using ci::Area;
+using ci::writeImage;
 using ci::app::MouseEvent;
 using ci::app::KeyEvent;
+
 using std::experimental::filesystem::path;
 
 const size_t KaleidoscopeApp::kWindowHeight = 750;
@@ -93,7 +97,7 @@ void KaleidoscopeApp::ManageCommand(const CommandType &command) {
       if (!path.has_extension()) {
         path.replace_extension(kDefaultImageExtension);
       }
-      ci::writeImage(path, copyWindowSurface(ci::Area(ivec2(0, 0),
+      writeImage(path, copyWindowSurface(Area(ivec2(0, 0),
                                                       ivec2(kWindowHeight, kWindowHeight))));
       quit();
   }

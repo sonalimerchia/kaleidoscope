@@ -30,11 +30,11 @@ void StrokeMaker::StartNewStroke(const ivec2 &point) {
 
 void StrokeMaker::AddPointToStroke(const glm::ivec2 &point) {
   const pair<float, float> &polar_point = CartesianToPolar(point);
-  float sector_angle = 2*M_PI/num_sectors_;
+  double sector_angle = 2*M_PI/num_sectors_;
 
   // make one point in each sector
   for (size_t sector = 0; sector < num_sectors_; sector++) {
-    float new_theta = polar_point.second - sector*sector_angle;
+    double new_theta = polar_point.second - sector*sector_angle;
     vec2 cartesian(polar_point.first*cos(new_theta), polar_point.first*sin(new_theta));
 
     current_stroke_.points_by_sector.at(sector).push_back(center_ + cartesian);
@@ -79,7 +79,7 @@ pair<float, float> StrokeMaker::CartesianToPolar(const ivec2 &point) {
   theta *= (realigned_point.y > 0 ? -1 : 1);
 
   // Realign so connecting works well
-  float sector_angle = 2 * M_PI / num_sectors_;
+  double sector_angle = 2 * M_PI / num_sectors_;
   theta = sector_angle - theta;
 
   return pair<float, float>((float)(r), (float)(theta));

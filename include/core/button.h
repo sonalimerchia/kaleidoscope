@@ -1,6 +1,7 @@
+#include <string>
+
 #include <glm/glm.hpp>
 #include <cinder/gl/gl.h>
-#include <string>
 
 #ifndef KALEIDOSCOPE_INCLUDE_BUTTON_H_
 #define KALEIDOSCOPE_INCLUDE_BUTTON_H_
@@ -11,14 +12,15 @@ namespace visualizer {
 
 using glm::vec2;
 using glm::ivec2;
+using ci::Area;
+
 using std::string;
 
 class Button {
 
  public:
-  static const size_t kFontSize;
+  static const float kFontSize;
   static const string kFontStyle;
-
 
   /**
    * Creates a button
@@ -45,9 +47,9 @@ class Button {
   const string& GetMessage() const;
 
  private:
-  const ci::Area area_;
-
+  const Area area_;
   string message_;
+
 };
 
 } // namespace visualizer

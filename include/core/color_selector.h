@@ -8,6 +8,13 @@ namespace kaleidoscope {
 
 namespace visualizer {
 
+using glm::vec2;
+using glm::ivec2;
+
+using ci::ColorA;
+using ci::Area;
+using ci::Surface;
+
 class ColorSelector {
  public:
   /**
@@ -16,17 +23,17 @@ class ColorSelector {
    * @param position The location of the top left corner of the color selector
    * @param dimensions The dimensions of the color selector
    */
-  ColorSelector(const glm::vec2 &position, const glm::vec2 &dimensions);
+  ColorSelector(const ivec2 &position, const ivec2 &dimensions);
 
   /**
    * Draw the color selector
    */
-  void Draw();
+  void Draw() const;
 
   /**
    * @return the current color chosen on the selector (default if none selected yet)
    */
-  const ci::ColorA& GetColor() const;
+  const ColorA& GetColor() const;
 
   /**
    * Check to see if mouse activity in the given location would change the color
@@ -34,27 +41,27 @@ class ColorSelector {
    * @param mouse_loc the location of the mouse activity in the window
    * @return true if the mouse activity would change the color; false otherwise
    */
-  bool WasEdited(const glm::ivec2 &mouse_loc) const;
+  bool WasEdited(const ivec2 &mouse_loc) const;
 
   /**
    * Change the color of the color selector according to user activity
    *
    * @param mouse_loc the location of the mouse activity
    */
-  void ChangeColor(const glm::ivec2 &mouse_loc);
+  void ChangeColor(const ivec2 &mouse_loc);
 
  private:
   // The areas occupied by the different components
-  ci::Area palette_area_;
-  ci::Area slider_area_;
-  ci::Area color_display_;
+  const Area palette_area_;
+  const Area slider_area_;
+  const Area color_display_area_;
 
-  // The surfaces holding the gradients of the components
-  ci::Surface palette_;
-  ci::Surface slider_;
+  // The surfaces that display the gradients of the components
+  Surface palette_;
+  Surface slider_;
 
   // The current color of the selector
-  ci::ColorA color_;
+  ColorA color_;
 
   // The HSV components of the current color selected
   float hue_;
@@ -107,7 +114,7 @@ class ColorSelector {
    * @param mouse_location the location of the mouse activity that affects hue or
    * saturation
    */
-  void ChangeHueNSaturation(const glm::ivec2 &mouse_location);
+  void ChangeHueNSaturation(const ivec2 &mouse_location);
 
   /**
    * Change the value component of the current color's HSV according to mouse
@@ -115,7 +122,7 @@ class ColorSelector {
    *
    * @param mouse_location the location of the mouse activity that affects the value
    */
-  void ChangeValue(const glm::ivec2 &mouse_location);
+  void ChangeValue(const ivec2 &mouse_location);
 };
 
 } // namespace visualizer

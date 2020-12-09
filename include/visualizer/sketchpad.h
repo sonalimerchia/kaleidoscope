@@ -21,6 +21,9 @@ class Sketchpad {
   static const size_t kMaxBrushSize;
   static const ci::Color kDefaultBackgroundColor;
   static const ci::Color kDefaultDrawingColor;
+  static const size_t kMinSectors;
+  static const size_t kMaxSectors;
+  static const int kRefreshConstant;
 
   Sketchpad();
 

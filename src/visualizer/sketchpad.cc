@@ -1,4 +1,5 @@
 #include <vector>
+
 #include <glm/glm.hpp>
 #include <cinder/gl/gl.h>
 
@@ -17,11 +18,16 @@ using ci::Color;
 const size_t Sketchpad::kMinBrushSize = 1;
 const size_t Sketchpad::kMaxBrushSize = 40;
 
-const ci::Color Sketchpad::kDefaultBackgroundColor = ci::Color("white");
-const ci::Color Sketchpad::kDefaultDrawingColor = ci::Color("blue");
+const size_t Sketchpad::kMinSectors = 2;
+const size_t Sketchpad::kMaxSectors = 50;
+
+const Color Sketchpad::kDefaultBackgroundColor = Color("white");
+const Color Sketchpad::kDefaultDrawingColor = Color("blue");
+
+const int Sketchpad::kRefreshConstant = 10;
 
 Sketchpad::Sketchpad() {
-  refresher_ = 10;
+  refresher_ = kRefreshConstant;
 
   stroke_maker_.SetCenter(vec2(KaleidoscopeApp::kWindowHeight/2, KaleidoscopeApp::kWindowHeight/2));
   stroke_maker_.SetBrushSize(kMinBrushSize);
@@ -86,7 +92,7 @@ void Sketchpad::MouseUp() {
   if (new_stroke.points_by_sector.at(0).size() != 0) {
     strokes_.push_back(new_stroke);
     stroke_maker_.clear();
-    refresher_ += 10;
+    refresher_ += kRefreshConstant;
   }
 }
 
@@ -99,7 +105,7 @@ void Sketchpad::Clear() {
     history_.push_back(strokes_);
     strokes_.clear();
     stroke_maker_.clear();
-    refresher_ += 10;
+    refresher_ += kRefreshConstant;
   }
 }
 
@@ -112,8 +118,9 @@ void Sketchpad::ChangeDrawMode() {
 }
 
 void Sketchpad::ChangeNumSectors(int change) {
-  // Only do change if there will be between 2 and 360 sectors afterwards
-  if (change + stroke_maker_.GetNumSectors() <= 1 || change + stroke_maker_.GetNumSectors() >= 360) {
+  // Only do change if there will be between 2 and 100 sectors afterwards
+  if (change + stroke_maker_.GetNumSectors() <= kMinSectors-1 ||
+      change + stroke_maker_.GetNumSectors() >= kMaxSectors) {
     return;
   }
 
@@ -144,7 +151,7 @@ void Sketchpad::ChangeNumSectors(int change) {
   }
 }
 
-void Sketchpad::SetColor(const ci::Color &color) {
+void Sketchpad::SetColor(const Color &color) {
   stroke_maker_.SetColor(color);
 }
 
@@ -158,7 +165,7 @@ void Sketchpad::Undo() {
   } else if (strokes_.size() != 0) {
     strokes_.pop_back();
   }
-  refresher_+= 10;
+  refresher_+= kRefreshConstant;
 }
 
 

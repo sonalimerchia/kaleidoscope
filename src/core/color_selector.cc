@@ -8,28 +8,39 @@ namespace kaleidoscope {
 
 namespace visualizer {
 
-ColorSelector::ColorSelector(const glm::vec2 &position,
-                             const glm::vec2 &dimensions) {
-  int vertical_unit = (int)(dimensions.y/10);
-  int horizontal_unit = (int)(dimensions.x/8);
-  int x = (int)(position.x);
-  int y = (int)(position.y);
+using ci::Color;
+using ci::ColorAf;
+using ci::Colorf;
+using ci::Color8u;
+using ci::ColorModel;
 
-  // Set the locations for each component of the color selector
-  palette_area_ = ci::Area(x + horizontal_unit, y + vertical_unit,
-                           x + 7*horizontal_unit, y + 5*vertical_unit);
-  slider_area_ = ci::Area(x + horizontal_unit, y + 6*vertical_unit,
-                          x + 7*horizontal_unit, y + 7*vertical_unit);
-  color_display_ = ci::Area(x + horizontal_unit, y + 8*vertical_unit,
-                            x + 7*horizontal_unit, y + 9*vertical_unit);
+using ci::gl::Texture2d;
+using ci::Surface;
+
+using ci::gl::color;
+using ci::gl::draw;
+using ci::gl::drawLine;
+using ci::gl::drawStrokedCircle;
+using ci::gl::drawSolidRect;
+
+using glm::ivec2;
+using glm::vec2;
+
+ColorSelector::ColorSelector(const ivec2 &position, const ivec2 &dimensions) :
+  palette_area_(position.x + dimensions.x/8, position.y + dimensions.y/10,
+                position.x + 7*dimensions.x/8, position.y + 5*dimensions.y/10),
+  slider_area_(position.x + dimensions.x/8, position.y + 6*dimensions.y/10,
+               position.x + 7*dimensions.x/8, position.y + 7*dimensions.y/10),
+  color_display_area_(position.x + dimensions.x/8, position.y + 8*dimensions.y/10,
+                      position.x + 7*dimensions.x/8, position.y + 9*dimensions.y/10) {
 
   // Create the surfaces for each gradient component
-  palette_ = ci::Surface(palette_area_.getWidth(), palette_area_.getHeight(), false);
-  slider_ = ci::Surface(slider_area_.getWidth(), 1, false);
+  palette_ = Surface(palette_area_.getWidth(), palette_area_.getHeight(), false);
+  slider_ = Surface(slider_area_.getWidth(), 1, false);
 
   // Initialize default color
   color_ = Sketchpad::kDefaultDrawingColor;
-  glm::vec3 hsv = color_.get(ci::ColorModel::CM_HSV);
+  glm::vec3 hsv = color_.get(ColorModel::CM_HSV);
   hue_ = hsv.x;
   saturation_ = hsv.y;
   value_ = hsv.z;
@@ -39,73 +50,73 @@ ColorSelector::ColorSelector(const glm::vec2 &position,
   RefreshSlider();
 }
 
-void ColorSelector::Draw() {
+void ColorSelector::Draw() const {
   // Draw Gradient Components
   DrawHueSaturationPalette();
   DrawValueSlider();
 
   // Draw Color Display
-  ci::gl::color(color_);
-  ci::gl::drawSolidRect(color_display_);
+  color(color_);
+  drawSolidRect(color_display_area_);
 }
 
-const ci::ColorA& ColorSelector::GetColor() const {
+const ColorA& ColorSelector::GetColor() const {
   return color_;
 }
-bool ColorSelector::WasEdited(const glm::ivec2 &mouse_location) const {
+bool ColorSelector::WasEdited(const ivec2 &mouse_location) const {
   return palette_area_.contains(mouse_location) || slider_area_.contains(mouse_location);
 }
 
-void ColorSelector::ChangeColor(const glm::ivec2 &mouse_loc) {
+void ColorSelector::ChangeColor(const ivec2 &mouse_location) {
   // Adjust Hue/Saturation and change Value Display accordingly
-  if (palette_area_.contains(mouse_loc)) {
-    ChangeHueNSaturation(mouse_loc);
+  if (palette_area_.contains(mouse_location)) {
+    ChangeHueNSaturation(mouse_location);
     RefreshSlider();
 
     // Adjust Value and change Hue/Saturation Display accordingly
-  } else if (slider_area_.contains(mouse_loc)) {
-    ChangeValue(mouse_loc);
+  } else if (slider_area_.contains(mouse_location)) {
+    ChangeValue(mouse_location);
     RefreshPalette();
   }
 
-  color_ = ci::Colorf(ci::ColorModel::CM_HSV, hue_, saturation_, value_);
+  color_ = Colorf(ColorModel::CM_HSV, hue_, saturation_, value_);
 }
 
 void ColorSelector::DrawValueSlider() const {
   // Draw slider
-  ci::gl::color(ci::Color("white"));
-  ci::gl::draw(ci::gl::Texture2d::create(slider_), slider_area_);
+  color(Color("white"));
+  draw(Texture2d::create(slider_), slider_area_);
 
   // Draw line on slider to show current color
-  ci::gl::color(ci::Colorf(ci::ColorModel::CM_HSV, 1-hue_, 1-saturation_, 1-value_));
-  ci::gl::drawLine(glm::vec2(slider_area_.getX1() + value_ * slider_area_.getWidth(), slider_area_.getY1()),
-                   glm::vec2(slider_area_.getX1() + value_ * slider_area_.getWidth(), slider_area_.getY2()));
+  color(Colorf(ColorModel::CM_HSV, 1-hue_, 1-saturation_, 1-value_));
+  drawLine(vec2(slider_area_.getX1() + value_ * slider_area_.getWidth(), slider_area_.getY1()),
+                   vec2(slider_area_.getX1() + value_ * slider_area_.getWidth(), slider_area_.getY2()));
 }
 
 void ColorSelector::DrawHueSaturationPalette() const {
   // Draw palette area
-  ci::gl::color(ci::Color("white"));
-  ci::gl::draw(ci::gl::Texture2d::create(palette_), palette_area_);
+  color(Color("white"));
+  draw(Texture2d::create(palette_), palette_area_);
 
   // Draw circle on slider to show current color
-  ci::gl::color(ci::Colorf(ci::ColorModel::CM_HSV, 1-hue_, 1-saturation_, 1-value_));
-  ci::gl::drawStrokedCircle(glm::ivec2(hue_*palette_area_.getWidth(),
-                            (1-saturation_)*palette_area_.getHeight()) + palette_area_.getUL(),
-                            2);
+  color(Colorf(ColorModel::CM_HSV, 1-hue_, 1-saturation_, 1-value_));
+  ivec2 relative_color_loc(hue_*palette_area_.getWidth(),
+                                 (1-saturation_)*palette_area_.getHeight());
+  drawStrokedCircle(relative_color_loc + palette_area_.getUL(),2);
 }
 
-void ColorSelector::ChangeHueNSaturation(const glm::ivec2 &mouse_location) {
+void ColorSelector::ChangeHueNSaturation(const ivec2 &mouse_location) {
   // Get location on Hue/Saturation Palette
-  glm::vec2 relative_loc = mouse_location - palette_area_.getUL();
+  vec2 relative_loc = mouse_location - palette_area_.getUL();
 
   // Adjust hue and saturation accordingly
   hue_ = relative_loc.x/palette_area_.getWidth();
   saturation_ = 1 - relative_loc.y/palette_area_.getHeight();
 }
 
-void ColorSelector::ChangeValue(const glm::ivec2 &mouse_location) {
+void ColorSelector::ChangeValue(const ivec2 &mouse_location) {
   // Get location on Value Slider
-  glm::vec2 relative_loc = mouse_location - slider_area_.getUL();
+  vec2 relative_loc = mouse_location - slider_area_.getUL();
 
   // Adjust value accordingly
   value_ = relative_loc.x/slider_area_.getWidth();
@@ -119,8 +130,8 @@ void ColorSelector::RefreshPalette() {
       float saturation = 1 - y/palette_area_.getHeight();
 
       // Make the pixel's value component matches the current color's HSV
-      ci::ColorAf color(ci::ColorModel::CM_HSV, hue, saturation, value_);
-      palette_.setPixel(glm::ivec2(x, y), color);
+      ColorAf color(ColorModel::CM_HSV, hue, saturation, value_);
+      palette_.setPixel(ivec2(x, y), color);
     }
   }
 }
@@ -131,8 +142,8 @@ void ColorSelector::RefreshSlider() {
     float value = x/slider_area_.getWidth();
 
     // Make the pixel's hue/saturation components match the current color's HSV
-    ci::Color8u color(ci::ColorModel::CM_HSV, hue_, saturation_, value);
-    slider_.setPixel(glm::ivec2(x, 0), color);
+    Color8u color(ColorModel::CM_HSV, hue_, saturation_, value);
+    slider_.setPixel(ivec2(x, 0), color);
   }
 }
 

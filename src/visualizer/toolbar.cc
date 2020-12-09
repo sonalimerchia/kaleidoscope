@@ -17,22 +17,22 @@ Toolbar::Toolbar() :
         KaleidoscopeApp::kWindowWidth, KaleidoscopeApp::kWindowHeight),
 
   draw_mode_(area_.getUL(),
-             glm::ivec2(area_.getWidth(), KaleidoscopeApp::kWindowHeight/8),
+             ivec2(area_.getWidth(), KaleidoscopeApp::kWindowHeight/8),
              "Erase"),
 
-  brush_size_(area_.getUL() + glm::ivec2(0, KaleidoscopeApp::kWindowHeight/8),
-              glm::ivec2(area_.getWidth()/5, 2*KaleidoscopeApp::kWindowHeight/8),
+  brush_size_(area_.getUL() + ivec2(0, KaleidoscopeApp::kWindowHeight/8),
+              ivec2(area_.getWidth()/5, 2*KaleidoscopeApp::kWindowHeight/8),
               "Brush Size"),
 
-  color_selector_(area_.getUL() + glm::ivec2(0, 3*KaleidoscopeApp::kWindowHeight/8),
-                  glm::ivec2(area_.getWidth(), 3*KaleidoscopeApp::kWindowHeight/8)),
+  color_selector_(area_.getUL() + ivec2(0, 3*KaleidoscopeApp::kWindowHeight/8),
+                  ivec2(area_.getWidth(), 3*KaleidoscopeApp::kWindowHeight/8)),
 
-  undo_(area_.getUL() + glm::ivec2(0, 6*KaleidoscopeApp::kWindowHeight/8),
-        glm::ivec2(area_.getWidth(), KaleidoscopeApp::kWindowHeight/8),
+  undo_(area_.getUL() + ivec2(0, 6*KaleidoscopeApp::kWindowHeight/8),
+        ivec2(area_.getWidth(), KaleidoscopeApp::kWindowHeight/8),
         "Undo"),
 
-  save_(area_.getUL() + glm::ivec2(0, 7*KaleidoscopeApp::kWindowHeight/8),
-        glm::ivec2(area_.getWidth(), KaleidoscopeApp::kWindowHeight/8),
+  save_(area_.getUL() + ivec2(0, 7*KaleidoscopeApp::kWindowHeight/8),
+        ivec2(area_.getWidth(), KaleidoscopeApp::kWindowHeight/8),
         "Save") {}
 
 CommandType Toolbar::MouseClicked(const ivec2 &loc) {
@@ -95,7 +95,7 @@ void Toolbar::Draw() {
   color_selector_.Draw();
 }
 
-bool Toolbar::ContainsPoint(const glm::ivec2 &mouse_loc) {
+bool Toolbar::ContainsPoint(const ivec2 &mouse_loc) {
   return area_.contains(mouse_loc);
 }
 const ci::ColorA &Toolbar::GetColor() {

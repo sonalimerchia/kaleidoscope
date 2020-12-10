@@ -1,24 +1,33 @@
 #include <visualizer/kaleidoscope_app.h>
-#include <core/constants.h>
 
 namespace kaleidoscope {
 
 namespace visualizer {
 
 using glm::ivec2;
+
+using ci::Area;
 using ci::app::MouseEvent;
 using ci::app::KeyEvent;
+
 using std::experimental::filesystem::path;
 
+const size_t KaleidoscopeApp::kWindowHeight = 750;
+const size_t KaleidoscopeApp::kWindowWidth = 1000;
+
+const std::string KaleidoscopeApp::kDefaultImageExtension = "png";
+const std::string KaleidoscopeApp::kImagesFolderPath = "images";
+
 void KaleidoscopeApp::mouseUp(MouseEvent event) {
-  // React to mouse up, refresh the pad
+  // React to mouse up
   pad_.MouseUp();
-  needs_refresh_ = true;
 }
 
 void KaleidoscopeApp::mouseDrag(MouseEvent event) {
   // Respond to mouse activity in the toolbar
   if (toolbar_.ContainsPoint(event.getPos())) {
+    pad_.MouseUp();
+
     CommandType command = toolbar_.MouseDragged(event.getPos());
     ManageCommand(command);
 
@@ -31,6 +40,8 @@ void KaleidoscopeApp::mouseDrag(MouseEvent event) {
 void KaleidoscopeApp::mouseDown(MouseEvent event) {
   // Respond to mouse activity in the toolbar
   if (toolbar_.ContainsPoint(event.getPos())) {
+    pad_.MouseUp();
+
     CommandType command = toolbar_.MouseClicked(event.getPos());
     ManageCommand(command);
 
@@ -41,42 +52,26 @@ void KaleidoscopeApp::mouseDown(MouseEvent event) {
 }
 
 void KaleidoscopeApp::draw() {
-  // Draw stroke in progress unless you need to refresh. In which case, draw all
-  if (needs_refresh_) {
-    pad_.ClearAndDraw();
-    needs_refresh_ = false;
-  } else {
-    pad_.DrawCurrentStroke();
-  }
-
-  // Draw the toolbar
+  pad_.Draw();
   toolbar_.Draw();
 }
 
 void KaleidoscopeApp::setup() {
   setWindowSize(kWindowWidth, kWindowHeight);
-
-  // Set Up Pad
-  pad_.SetBackground(kDefaultBackgroundColor);
-  needs_refresh_ = true;
 }
 
 void KaleidoscopeApp::keyDown(KeyEvent event) {
   // Clear if backspace is pressed
   if (event.getCode() == KeyEvent::KEY_BACKSPACE) {
     pad_.Clear();
-    needs_refresh_ = true;
 
     // Change number of sectors if arrow keys are used
   } else if (event.getCode() == KeyEvent::KEY_UP || event.getCode() == KeyEvent::KEY_DOWN) {
     pad_.ChangeNumSectors(event.getCode() == KeyEvent::KEY_UP ? 1 : -1);
-    needs_refresh_ = true;
   }
 }
 
 void KaleidoscopeApp::ManageCommand(const CommandType &command) {
-  needs_refresh_ = true;
-
   switch(command) {
     // Change mode of drawing from eraser to drawing or vice versa
     case CommandType::DrawMode:
@@ -88,13 +83,23 @@ void KaleidoscopeApp::ManageCommand(const CommandType &command) {
       pad_.SetBrushSize(toolbar_.GetBrushSize());
       return;
 
+    // Change drawing color
+    case CommandType::ColorChange:
+      pad_.SetBrushColor(toolbar_.GetColor());
+      return;
+
+    // Undo last action
+    case CommandType::Undo:
+      pad_.Undo();
+      return;
+
     // Save and quit
     case CommandType::Save:
       path path = getSaveFilePath(kImagesFolderPath);
       if (!path.has_extension()) {
         path.replace_extension(kDefaultImageExtension);
       }
-      ci::writeImage(path, copyWindowSurface(ci::Area(ivec2(0, 0),
+      ci::writeImage(path, copyWindowSurface(Area(ivec2(0, 0),
                                                       ivec2(kWindowHeight, kWindowHeight))));
       quit();
   }

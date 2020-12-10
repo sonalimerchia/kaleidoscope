@@ -17,8 +17,20 @@ using std::vector;
 
 class Sketchpad {
  public:
+  static const size_t kMinBrushSize;
+  static const size_t kMaxBrushSize;
+
+  static const size_t kMinSectors;
+  static const size_t kMaxSectors;
+
+  static const ci::Color kDefaultBackgroundColor;
+  static const ci::Color kDefaultDrawingColor;
+
+  static const int kRefreshConstant;
+
   Sketchpad();
 
+  void Draw();
   /**
    * Clear the current sketchpad and draw all the strokes passed in
    * @param strokes the strokes to be drawn
@@ -37,27 +49,21 @@ class Sketchpad {
   void DrawStroke(const stroke &stroke);
 
   /**
-   * Set the background of the sketchpad to the color passed in
-   * @param color the new color of the sketchpad
-   */
-  void SetBackground(const Color &color);
-
-  /**
    * React as if the mouse was lifted up
    */
   void MouseUp();
 
   /**
    * React as if the mouse was dragged across the sketchpad
-   * @param loc the location of the mouse as it is dragged
+   * @param mouse_location the location of the mouse as it is dragged
    */
-  void MouseDragged(const ivec2 &loc);
+  void MouseDragged(const ivec2 &mouse_location);
 
   /**
    * React as if the mouse just pressed down on the sketchpad
-   * @param loc the location of the mouse as it is pressed down
+   * @param mouse_location the location of the mouse as it is pressed down
    */
-  void MouseDown(const ivec2 &loc);
+  void MouseDown(const ivec2 &mouse_location);
 
   /**
    * Clear the sketchpad such that next time ClearAndDraw() is called, the current strokes
@@ -83,10 +89,24 @@ class Sketchpad {
    */
   void ChangeNumSectors(int change);
 
+  /**
+   * Change the color that the sketchpad is currently drawing in to the color passed in
+   * @param color the new color to begin drawing in
+   */
+  void SetBrushColor(const Color &color);
+
+  /**
+   * Remove the last drawn stroke
+   */
+  void Undo();
+
  private:
   Color background_;
   vector<stroke> strokes_;
-  StrokeMaker maker_;
+  vector<vector<stroke>> history_;
+  StrokeMaker stroke_maker_;
+
+  int refresher_;
 };
 
 } // namespace visualizer

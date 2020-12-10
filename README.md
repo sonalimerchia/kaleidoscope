@@ -35,14 +35,14 @@ cmake --build
 
 ## Controls
 
-#####Keyboard Controls
+#### Keyboard Controls
 | Key        | Action                              |
 |------------|------------------------------------ |
 | `BACKSPACE`| Clear Editor                        |
 | `Up`       | Increase the number of sectors by 1 |
 | `Down`     | Decrease number of sectors by 1     |
 
-#####Editor Toolbar
+#### Editor Toolbar
 | Component      | Action                                           |
 |----------------|--------------------------------------------------|
 | Draw           | Switch your brush to draw if is erasing          |

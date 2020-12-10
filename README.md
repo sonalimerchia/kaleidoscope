@@ -11,14 +11,14 @@ undoing the last action, and saving using your device's save file dialog.
 Download the project and build using cmake. Downloading can
 be done in a number of ways using git, unzipping a .zip file, etc.
 Below are examples of how to download (using git) and how to build/run the app
-#####Downloading with Git
+##### Downloading with Git
 ```
 cd path\to\cinder_master
 git clone https://github.com/uiuc-fa20-cs126/final-project-sonalimerchia
 cd final-project-sonalimerchia
 ```
 
-#####Building/Running with CMake
+##### Building/Running with CMake
 ```
 mkdir cmake-build
 cd cmake-build
@@ -55,19 +55,19 @@ cmake --build
 ## Customization
 
 #### Changing Size of Editor
-1. Navigate to \src\visualizer\kaleidoscope_app.cc
-2. Edit kWindowWidth and kWindowHeight as desired
+1. Navigate to `\src\visualizer\kaleidoscope_app.cc`
+2. Edit `kWindowWidth` and `kWindowHeight` as desired
     * Keep in mind that your toolbar will be the width of 
-    kWindowWidth - kWindowHeight to keep your drawing square 
-    so kWindowHeight should be less than kWindowWidth
+    `kWindowWidth - kWindowHeight` to keep your drawing square 
+    so `kWindowHeight` should be less than `kWindowWidth`
 
 #### Changing Pad Color
-1. Navigate to \src\visualizer\sketchpad.cc
-2. Change kDefaultDrawingColor to another cinder-supported color
+1. Navigate to `\src\visualizer\sketchpad.cc`
+2. Change `kDefaultDrawingColor` to another cinder-supported color
 
 #### Changing Default Save Location
-1. Navigate to src\visualizer\kaleidoscope_app.cc
-2. Change kImagesFolderPath to the default path you would like to save 
+1. Navigate to `src\visualizer\kaleidoscope_app.cc`
+2. Change `kImagesFolderPath` to the default path you would like to save 
 your images to. 
     * Whether or not you do this, the save file dialog will allow you to 
     save your images wherever you would like. Only use this option if you 
